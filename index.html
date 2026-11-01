@@ -273,44 +273,6 @@
                         </button>
                     </div>
                 </div>
-
-                <!-- Web Audio Ambient Sound Generator -->
-                <div class="glass rounded-2xl p-6 border border-zinc-800/80 space-y-4">
-                    <div class="flex items-center justify-between">
-                        <div class="flex items-center gap-2">
-                            <i data-lucide="headphones" class="w-5 h-5 text-indigo-400"></i>
-                            <h3 class="font-bold text-base">Synthesized Ambient Audio</h3>
-                        </div>
-                        <span class="text-xs text-zinc-500">Pure Web Audio</span>
-                    </div>
-
-                    <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
-                        <button data-sound="binaural" class="audio-btn min-h-[54px] p-3 rounded-xl bg-zinc-900 border border-zinc-800 hover:border-indigo-500/50 flex flex-col items-center justify-center gap-1 transition-all group active:scale-95">
-                            <i data-lucide="waves" class="w-5 h-5 text-zinc-400 group-hover:text-indigo-400 transition-colors"></i>
-                            <span class="text-xs font-medium">Binaural (Alpha)</span>
-                        </button>
-                        <button data-sound="pink" class="audio-btn min-h-[54px] p-3 rounded-xl bg-zinc-900 border border-zinc-800 hover:border-indigo-500/50 flex flex-col items-center justify-center gap-1 transition-all group active:scale-95">
-                            <i data-lucide="wind" class="w-5 h-5 text-zinc-400 group-hover:text-indigo-400 transition-colors"></i>
-                            <span class="text-xs font-medium">Pink Noise</span>
-                        </button>
-                        <button data-sound="white" class="audio-btn min-h-[54px] p-3 rounded-xl bg-zinc-900 border border-zinc-800 hover:border-indigo-500/50 flex flex-col items-center justify-center gap-1 transition-all group active:scale-95">
-                            <i data-lucide="radio" class="w-5 h-5 text-zinc-400 group-hover:text-indigo-400 transition-colors"></i>
-                            <span class="text-xs font-medium">White Noise</span>
-                        </button>
-                        <button data-sound="rain" class="audio-btn min-h-[54px] p-3 rounded-xl bg-zinc-900 border border-zinc-800 hover:border-indigo-500/50 flex flex-col items-center justify-center gap-1 transition-all group active:scale-95">
-                            <i data-lucide="cloud-rain" class="w-5 h-5 text-zinc-400 group-hover:text-indigo-400 transition-colors"></i>
-                            <span class="text-xs font-medium">Soft Rain</span>
-                        </button>
-                    </div>
-
-                    <!-- Volume & Audio Status Slider -->
-                    <div class="flex items-center gap-4 bg-zinc-900/50 p-3 rounded-xl border border-zinc-800/60">
-                        <i data-lucide="volume-2" class="w-4 h-4 text-zinc-400"></i>
-                        <input id="audioVolume" type="range" min="0" max="1" step="0.01" value="0.3" class="w-full accent-indigo-500 h-2 bg-zinc-800 rounded-lg cursor-pointer">
-                        <span id="activeSoundLabel" class="text-xs text-zinc-400 whitespace-nowrap min-w-[80px] text-right">Off</span>
-                    </div>
-                </div>
-
             </div>
 
             <div class="lg:col-span-5 space-y-6">

@@ -974,7 +974,6 @@
 
             el.clearCompletedBtn.addEventListener('click', clearCompleted);
 
-            // Zen Mode controls
             el.enterZenBtn.addEventListener('click', () => {
                 el.zenOverlay.classList.remove('hidden');
                 if (document.documentElement.requestFullscreen) document.documentElement.requestFullscreen().catch(() => {});

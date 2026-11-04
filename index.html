@@ -7,6 +7,7 @@
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="LockIn">
     <meta name="theme-color" content="#09090b">
     <title>LockIn</title>
     <script src="https://cdn.tailwindcss.com"></script>
@@ -110,6 +111,11 @@
                     <span id="headerStreakText">0 Day Streak</span>
                 </div>
 
+                <button id="enableNotifHeaderBtn" title="Enable Mobile Notifications" class="p-2.5 rounded-xl bg-zinc-900 border border-zinc-800 hover:bg-zinc-800 text-zinc-300 transition-colors hidden sm:flex items-center gap-1.5 text-xs font-semibold">
+                    <i data-lucide="bell" class="w-4 h-4 text-indigo-400"></i>
+                    <span id="headerNotifStatusText">Enable Alerts</span>
+                </button>
+
                 <button id="themeToggleBtn" title="Toggle Light/Dark Theme" class="p-2.5 rounded-xl bg-zinc-900 border border-zinc-800 hover:bg-zinc-800 text-zinc-300 transition-colors">
                     <i data-lucide="sun" class="w-4 h-4 hidden dark:block"></i>
                     <i data-lucide="moon" class="w-4 h-4 block dark:hidden"></i>
@@ -208,7 +214,7 @@
 
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
 
-            <div class="lg:col-span-7 space-y-6">
+            <div class="lg:col-span-6 space-y-6">
 
                 <div class="glass rounded-2xl p-6 md:p-8 flex flex-col items-center text-center relative border border-zinc-800/80">
                     <div class="flex items-center gap-1 bg-zinc-900/90 p-1.5 rounded-xl border border-zinc-800 mb-8 w-full max-w-sm justify-between">
@@ -247,9 +253,6 @@
                         </button>
                     </div>
                 </div>
-            </div>
-
-            <div class="lg:col-span-5 space-y-6">
 
                 <div class="glass rounded-2xl p-5 md:p-6 border border-zinc-800/80 space-y-4">
                     <div class="flex items-center justify-between">
@@ -275,6 +278,10 @@
                         </div>
                     </div>
                 </div>
+
+            </div>
+
+            <div class="lg:col-span-6 space-y-6">
 
                 <div class="glass rounded-2xl p-5 md:p-6 border border-zinc-800/80 flex flex-col min-h-[380px]">
                     <div class="space-y-3 pb-4 border-b border-zinc-800">
@@ -307,7 +314,7 @@
                         <button id="clearCompletedBtn" type="button" class="hover:text-zinc-200 transition-colors py-1">Clear finished topics</button>
                     </div>
 
-                    <div id="taskList" class="mt-3 flex-1 overflow-y-auto space-y-2.5 pr-1 max-h-[280px] touch-scroll">
+                    <div id="taskList" class="mt-3 flex-1 overflow-y-auto space-y-2.5 pr-1 max-h-[250px] touch-scroll">
                     </div>
                 </div>
 
@@ -315,7 +322,74 @@
 
         </div>
 
+        <section class="glass rounded-3xl p-6 md:p-8 border border-zinc-800/80 space-y-6">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-zinc-800/80 pb-4">
+                <div>
+                    <h3 class="text-xl font-bold flex items-center gap-2">
+                        <i data-lucide="calendar-days" class="w-6 h-6 text-indigo-400"></i> Memorization Schedule Calendar
+                    </h3>
+                    <p class="text-xs text-zinc-400 mt-1">Plan your daily topic targets and check off your memorization milestones.</p>
+                </div>
+                <div class="flex items-center gap-2">
+                    <button id="prevMonthBtn" class="p-2 rounded-xl bg-zinc-900 border border-zinc-800 hover:bg-zinc-800 text-zinc-300 transition-colors">
+                        <i data-lucide="chevron-left" class="w-4 h-4"></i>
+                    </button>
+                    <span id="calendarMonthYear" class="text-sm font-bold min-w-[120px] text-center">Month Year</span>
+                    <button id="nextMonthBtn" class="p-2 rounded-xl bg-zinc-900 border border-zinc-800 hover:bg-zinc-800 text-zinc-300 transition-colors">
+                        <i data-lucide="chevron-right" class="w-4 h-4"></i>
+                    </button>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-7 gap-1 text-center font-semibold text-xs text-zinc-400 py-1">
+                <div>Sun</div>
+                <div>Mon</div>
+                <div>Tue</div>
+                <div>Wed</div>
+                <div>Thu</div>
+                <div>Fri</div>
+                <div>Sat</div>
+            </div>
+
+            <div id="calendarGrid" class="grid grid-cols-7 gap-1.5 md:gap-2">
+            </div>
+        </section>
+
     </main>
+
+    <div id="dayScheduleModal" class="hidden fixed inset-0 bg-zinc-950/80 backdrop-blur-md z-50 flex items-center justify-center p-4">
+        <div class="glass max-w-lg w-full rounded-3xl p-6 border border-zinc-800 shadow-2xl space-y-5 relative">
+            <div class="flex items-center justify-between border-b border-zinc-800 pb-3">
+                <div>
+                    <h3 id="modalDateTitle" class="font-bold text-lg flex items-center gap-2">
+                        <i data-lucide="calendar" class="w-5 h-5 text-indigo-400"></i> Scheduled Topics
+                    </h3>
+                    <p id="modalDateSubtitle" class="text-xs text-zinc-400">Assign & memorize topics for this day</p>
+                </div>
+                <button id="closeDayModalBtn" class="text-zinc-400 hover:text-white p-1 rounded-lg hover:bg-zinc-800 transition-colors">
+                    <i data-lucide="x" class="w-5 h-5"></i>
+                </button>
+            </div>
+
+            <div class="space-y-3">
+                <label class="text-xs font-semibold text-zinc-400 uppercase tracking-wider block">Add Topic to Schedule</label>
+                <div class="flex gap-2">
+                    <select id="scheduleSubjectSelect" class="bg-zinc-900 border border-zinc-800 rounded-xl px-2.5 py-2.5 text-xs text-zinc-300 focus:outline-none focus:border-indigo-500 cursor-pointer min-h-[42px]">
+                    </select>
+                    <input type="text" id="scheduleTopicInput" placeholder="Enter topic title..." class="flex-1 min-h-[42px] bg-zinc-900 border border-zinc-800 rounded-xl px-3 py-2.5 text-xs text-zinc-100 placeholder-zinc-500 focus:outline-none focus:border-indigo-500">
+                    <button id="addScheduleTopicBtn" class="min-h-[42px] px-4 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-medium text-xs flex items-center justify-center transition-all">
+                        Add
+                    </button>
+                </div>
+            </div>
+
+            <div class="space-y-2">
+                <label class="text-xs font-semibold text-zinc-400 uppercase tracking-wider block">Scheduled Checklist</label>
+                <div id="dayTopicsList" class="space-y-2 max-h-[260px] overflow-y-auto pr-1 touch-scroll">
+                </div>
+            </div>
+        </div>
+    </div>
 
     <div id="settingsPanel" class="hidden fixed inset-0 bg-zinc-950/80 backdrop-blur-md z-50 flex items-center justify-center p-4">
         <div class="glass max-w-md w-full rounded-3xl p-6 border border-zinc-800 shadow-2xl space-y-6 relative animate-in fade-in zoom-in duration-200">
@@ -336,6 +410,20 @@
                 <div>
                     <label class="text-xs font-medium text-zinc-400 block mb-1">Daily Study Target (hours)</label>
                     <input type="number" id="inputDailyGoalHours" min="1" max="16" value="4" class="w-full bg-zinc-900 border border-zinc-800 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:border-indigo-500 text-zinc-100">
+                </div>
+                <div class="pt-2 border-t border-zinc-800/80 space-y-3">
+                    <div>
+                        <label class="text-xs font-medium text-zinc-400 block mb-1">Daily Study Reminder Time</label>
+                        <input type="time" id="inputReminderTime" value="08:00" class="w-full bg-zinc-900 border border-zinc-800 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:border-indigo-500 text-zinc-100">
+                        <span class="text-[10px] text-zinc-500 mt-1 block">Triggers a persistent reminder notification on your phone when study time arrives.</span>
+                    </div>
+
+                    <div>
+                        <button id="requestNotifModalBtn" type="button" class="w-full py-2.5 px-3 rounded-xl bg-zinc-900 border border-zinc-800 hover:bg-zinc-800 text-xs font-semibold text-indigo-400 flex items-center justify-center gap-2 transition-colors">
+                            <i data-lucide="bell-ring" class="w-4 h-4"></i>
+                            <span id="modalNotifBtnText">Grant Notification Permission</span>
+                        </button>
+                    </div>
                 </div>
                 <div class="pt-2 border-t border-zinc-800/80">
                     <label class="text-xs font-medium text-zinc-400 block mb-1">Privacy PIN Protection (Optional)</label>
@@ -362,7 +450,7 @@
             <span class="text-[10px]">Topics</span>
         </button>
         <button id="mobileNavZen" type="button" class="flex flex-col items-center gap-1 text-zinc-400 hover:text-zinc-200 font-medium">
-            <i data-lucide="maximize-2" class="w-5 h-5"></i>
+            <i data-lucide="maximize-2" class="w-4 h-4"></i>
             <span class="text-[10px]">Hush</span>
         </button>
         <button id="mobileNavSettings" type="button" class="flex flex-col items-center gap-1 text-zinc-400 hover:text-zinc-200 font-medium">
@@ -420,6 +508,136 @@
             }, 9000);
         }
 
+        // Service Worker & Sticky Notification System
+        let swRegistration = null;
+
+        function initServiceWorker() {
+            if ('serviceWorker' in navigator) {
+                const swCode = `
+                    self.addEventListener('install', (e) => self.skipWaiting());
+                    self.addEventListener('activate', (e) => self.clients.claim());
+                    self.addEventListener('notificationclick', (e) => {
+                        e.notification.close();
+                        e.waitUntil(
+                            clients.matchAll({ type: 'window', includeUncontrolled: true }).then((clientList) => {
+                                if (clientList.length > 0) return clientList[0].focus();
+                                return clients.openWindow('/');
+                            })
+                        );
+                    });
+                `;
+                const blob = new Blob([swCode], { type: 'application/javascript' });
+                const blobUrl = URL.createObjectURL(blob);
+
+                navigator.serviceWorker.register(blobUrl)
+                    .then((reg) => {
+                        swRegistration = reg;
+                        updateNotificationPermissionUI();
+                    })
+                    .catch((err) => console.log('SW Registration error:', err));
+            }
+
+            // Inject dynamic Manifest for Mobile PWA installation
+            const manifestObj = {
+                name: "LockIn Study OS",
+                short_name: "LockIn",
+                start_url: "./",
+                display: "standalone",
+                background_color: "#09090b",
+                theme_color: "#09090b",
+                icons: [{ src: "/logo.png", sizes: "192x192", type: "image/png" }]
+            };
+            const manifestBlob = new Blob([JSON.stringify(manifestObj)], { type: 'application/json' });
+            const manifestURL = URL.createObjectURL(manifestBlob);
+            const linkEl = document.createElement('link');
+            linkEl.rel = 'manifest';
+            linkEl.href = manifestURL;
+            document.head.appendChild(linkEl);
+        }
+
+        function requestNotificationPermission() {
+            if (!('Notification' in window)) {
+                alert('Notifications are not supported on this device/browser.');
+                return;
+            }
+            Notification.requestPermission().then((permission) => {
+                updateNotificationPermissionUI();
+                if (permission === 'granted') {
+                    showPersistentNotification('🔒 LockIn Activated', 'Mobile accountability partner active! Sticky study alerts ready.');
+                }
+            });
+        }
+
+        function updateNotificationPermissionUI() {
+            const headerBtnText = document.getElementById('headerNotifStatusText');
+            const modalBtnText = document.getElementById('modalNotifBtnText');
+
+            if (!('Notification' in window)) {
+                if (headerBtnText) headerBtnText.innerText = 'Not Supported';
+                if (modalBtnText) modalBtnText.innerText = 'Notifications Not Supported';
+                return;
+            }
+
+            if (Notification.permission === 'granted') {
+                if (headerBtnText) headerBtnText.innerText = 'Alerts Enabled';
+                if (modalBtnText) modalBtnText.innerText = 'Alerts Active ✓';
+            } else if (Notification.permission === 'denied') {
+                if (headerBtnText) headerBtnText.innerText = 'Alerts Blocked';
+                if (modalBtnText) modalBtnText.innerText = 'Alerts Blocked in Browser';
+            } else {
+                if (headerBtnText) headerBtnText.innerText = 'Enable Alerts';
+                if (modalBtnText) modalBtnText.innerText = 'Grant Notification Permission';
+            }
+        }
+
+        function showPersistentNotification(title, body, tag = 'lockin-study-active') {
+            if ('Notification' in window && Notification.permission === 'granted') {
+                const options = {
+                    body: body,
+                    icon: '/logo.png',
+                    tag: tag,
+                    renotify: true,
+                    requireInteraction: true,
+                    vibrate: [200, 100, 200]
+                };
+
+                if (swRegistration && swRegistration.showNotification) {
+                    swRegistration.showNotification(title, options);
+                } else {
+                    new Notification(title, options);
+                }
+            }
+        }
+
+        function clearPersistentNotification(tag = 'lockin-study-active') {
+            if (swRegistration && swRegistration.getNotifications) {
+                swRegistration.getNotifications({ tag: tag }).then((notifications) => {
+                    notifications.forEach((n) => n.close());
+                });
+            }
+        }
+
+        function checkDailyReminderSchedule() {
+            setInterval(() => {
+                const reminderTime = state.dailyReminderTime;
+                if (!reminderTime || Notification.permission !== 'granted') return;
+
+                const now = new Date();
+                const currentHM = `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`;
+                const todayKey = getTodayKey();
+
+                const lastFired = localStorage.getItem('lockin_last_reminder_fired');
+                if (currentHM === reminderTime && lastFired !== todayKey) {
+                    localStorage.setItem('lockin_last_reminder_fired', todayKey);
+                    showPersistentNotification(
+                        '⏰ Time to Lock In!',
+                        'Study time has arrived. Complete today\'s target to keep your streak burning!',
+                        'lockin-daily-reminder'
+                    );
+                }
+            }, 30000);
+        }
+
         // 14 Curriculum Subjects
         const subjectsData = [
             { id: 'nahu', name: 'Nahu', cat: 'arabic' },
@@ -451,11 +669,15 @@
                 intervalId: null
             },
             dailyGoalHours: 4,
+            dailyReminderTime: '08:00',
             pinCode: localStorage.getItem('lockin_pincode') || '',
             tasks: JSON.parse(localStorage.getItem('lockin_tasks') || '[]'),
+            schedule: JSON.parse(localStorage.getItem('lockin_calendar_schedule') || '{}'),
             analytics: JSON.parse(localStorage.getItem('lockin_analytics') || '{}'),
             streak: JSON.parse(localStorage.getItem('lockin_streak') || '{"count":0, "lastDate":null}'),
             selectedSubject: 'nahu',
+            currentCalendarDate: new Date(),
+            activeModalDateStr: null,
             audio: { ctx: null, activeType: null, nodes: [], gainNode: null, volume: 0.3 }
         };
 
@@ -479,6 +701,9 @@
             inputStudyMin: document.getElementById('inputStudyMin'),
             inputShortMin: document.getElementById('inputShortMin'),
             inputDailyGoalHours: document.getElementById('inputDailyGoalHours'),
+            inputReminderTime: document.getElementById('inputReminderTime'),
+            requestNotifModalBtn: document.getElementById('requestNotifModalBtn'),
+            enableNotifHeaderBtn: document.getElementById('enableNotifHeaderBtn'),
             inputPinCode: document.getElementById('inputPinCode'),
             pinLockOverlay: document.getElementById('pinLockOverlay'),
             pinInput: document.getElementById('pinInput'),
@@ -511,6 +736,17 @@
             weeklyBarChart: document.getElementById('weeklyBarChart'),
             weeklyTotalText: document.getElementById('weeklyTotalText'),
             changeGoalBtn: document.getElementById('changeGoalBtn'),
+            calendarGrid: document.getElementById('calendarGrid'),
+            calendarMonthYear: document.getElementById('calendarMonthYear'),
+            prevMonthBtn: document.getElementById('prevMonthBtn'),
+            nextMonthBtn: document.getElementById('nextMonthBtn'),
+            dayScheduleModal: document.getElementById('dayScheduleModal'),
+            modalDateTitle: document.getElementById('modalDateTitle'),
+            closeDayModalBtn: document.getElementById('closeDayModalBtn'),
+            scheduleSubjectSelect: document.getElementById('scheduleSubjectSelect'),
+            scheduleTopicInput: document.getElementById('scheduleTopicInput'),
+            addScheduleTopicBtn: document.getElementById('addScheduleTopicBtn'),
+            dayTopicsList: document.getElementById('dayTopicsList'),
             mobileNavTimer: document.getElementById('mobileNavTimer'),
             mobileNavTasks: document.getElementById('mobileNavTasks'),
             mobileNavZen: document.getElementById('mobileNavZen'),
@@ -537,6 +773,7 @@
         // Bootstrap App
         window.addEventListener('DOMContentLoaded', () => {
             if (window.lucide) lucide.createIcons();
+            initServiceWorker();
             checkPinLock();
             loadSettings();
             initCountdown();
@@ -546,8 +783,10 @@
             renderTasks();
             checkAndUpdateStreak();
             renderAnalytics();
+            renderCalendar();
             setupEventListeners();
             startQuranAyatCycle();
+            checkDailyReminderSchedule();
         });
 
         // PIN Lock Check
@@ -603,11 +842,16 @@
 
         function populateSubjectSelect() {
             el.taskSubjectSelect.innerHTML = '';
+            el.scheduleSubjectSelect.innerHTML = '';
+
             subjectsData.forEach(sub => {
-                const opt = document.createElement('option');
-                opt.value = sub.id;
-                opt.innerText = sub.name;
-                el.taskSubjectSelect.appendChild(opt);
+                const opt1 = document.createElement('option');
+                opt1.value = sub.id; opt1.innerText = sub.name;
+                el.taskSubjectSelect.appendChild(opt1);
+
+                const opt2 = document.createElement('option');
+                opt2.value = sub.id; opt2.innerText = sub.name;
+                el.scheduleSubjectSelect.appendChild(opt2);
             });
             el.taskSubjectSelect.value = state.selectedSubject;
         }
@@ -657,6 +901,17 @@
             el.startPauseIcon.setAttribute('data-lucide', 'pause');
             el.zenStartPauseBtn.innerText = 'Pause Session';
             if (window.lucide) lucide.createIcons();
+
+            // Sticky Persistent Mobile Alert on session start
+            if (state.timer.mode === 'study') {
+                const subName = state.selectedSubject.toUpperCase();
+                showPersistentNotification(
+                    '🔒 Active Study Session - Stay Locked In!',
+                    `Focusing on subject [${subName}]. This alert will remain on your device until session completes.`,
+                    'lockin-study-active'
+                );
+            }
+
             state.timer.intervalId = setInterval(() => {
                 if (state.timer.remaining > 0) {
                     state.timer.remaining--; 
@@ -677,6 +932,7 @@
 
         function resetTimer() {
             pauseTimer();
+            clearPersistentNotification('lockin-study-active');
             state.timer.remaining = state.timer.durations[state.timer.mode];
             el.startPauseText.innerText = 'Start Focus';
             el.startPauseIcon.setAttribute('data-lucide', 'play');
@@ -705,14 +961,170 @@
         function handleTimerCompletion() {
             pauseTimer(); 
             playNotificationChime();
+            clearPersistentNotification('lockin-study-active');
 
             // Record completed study minutes if in study mode
             if (state.timer.mode === 'study') {
                 const mins = Math.round(state.timer.durations.study / 60);
                 addCompletedFocusMinutes(mins);
+
+                showPersistentNotification(
+                    '🎉 Session Complete! Top Work!',
+                    `You've locked in for ${mins} minutes. Time to take a short break and recharge.`,
+                    'lockin-study-done'
+                );
             }
 
             switchTimerMode(state.timer.mode === 'study' ? 'shortBreak' : 'study');
+        }
+
+        // Calendar Memorization Scheduler Component
+        function renderCalendar() {
+            const year = state.currentCalendarDate.getFullYear();
+            const month = state.currentCalendarDate.getMonth();
+            const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+            
+            el.calendarMonthYear.innerText = `${monthNames[month]} ${year}`;
+            el.calendarGrid.innerHTML = '';
+
+            const firstDay = new Date(year, month, 1).getDay(); // 0 is Sunday
+            const daysInMonth = new Date(year, month + 1, 0).getDate();
+            const prevMonthDays = new Date(year, month, 0).getDate();
+
+            // Previous month padding days
+            for (let i = firstDay - 1; i >= 0; i--) {
+                const dayDiv = document.createElement('div');
+                dayDiv.className = 'min-h-[75px] md:min-h-[90px] p-1.5 rounded-xl bg-zinc-900/30 border border-zinc-800/30 text-zinc-600 text-xs pointer-events-none opacity-40';
+                dayDiv.innerHTML = `<span class="font-semibold">${prevMonthDays - i}</span>`;
+                el.calendarGrid.appendChild(dayDiv);
+            }
+
+            const todayStr = getTodayKey();
+
+            // Current month days
+            for (let day = 1; day <= daysInMonth; day++) {
+                const dateStr = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+                const isToday = dateStr === todayStr;
+                const dayTopics = state.schedule[dateStr] || [];
+                const completedTopics = dayTopics.filter(t => t.completed).length;
+
+                const dayDiv = document.createElement('div');
+                dayDiv.className = `min-h-[75px] md:min-h-[90px] p-2 rounded-xl border transition-all cursor-pointer flex flex-col justify-between ${
+                    isToday 
+                        ? 'bg-indigo-600/10 border-indigo-500/60 text-white' 
+                        : 'bg-zinc-900/60 border-zinc-800 hover:border-zinc-700 text-zinc-200'
+                }`;
+
+                let badgeHtml = '';
+                if (dayTopics.length > 0) {
+                    const isAllDone = completedTopics === dayTopics.length;
+                    badgeHtml = `
+                        <div class="mt-1 flex flex-col gap-1">
+                            <span class="text-[9px] px-1.5 py-0.5 rounded font-bold ${
+                                isAllDone 
+                                    ? 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/30' 
+                                    : 'bg-indigo-500/20 text-indigo-400 border border-indigo-500/30'
+                            }">${completedTopics}/${dayTopics.length} Memorized</span>
+                        </div>
+                    `;
+                }
+
+                dayDiv.innerHTML = `
+                    <div class="flex items-center justify-between">
+                        <span class="font-bold text-xs ${isToday ? 'w-5 h-5 rounded-full bg-indigo-600 flex items-center justify-center text-white' : ''}">${day}</span>
+                        ${dayTopics.length > 0 ? `<i data-lucide="bookmark" class="w-3 h-3 text-indigo-400"></i>` : ''}
+                    </div>
+                    ${badgeHtml}
+                `;
+
+                dayDiv.onclick = () => openDayScheduleModal(dateStr, day, monthNames[month], year);
+                el.calendarGrid.appendChild(dayDiv);
+            }
+
+            if (window.lucide) lucide.createIcons();
+        }
+
+        function openDayScheduleModal(dateStr, day, monthName, year) {
+            state.activeModalDateStr = dateStr;
+            el.modalDateTitle.innerText = `${monthName} ${day}, ${year}`;
+            el.dayScheduleModal.classList.remove('hidden');
+            renderDayTopics();
+        }
+
+        function handleAddScheduleTopic() {
+            const title = el.scheduleTopicInput.value.trim();
+            if (!title || !state.activeModalDateStr) return;
+
+            const subject = el.scheduleSubjectSelect.value || 'nahu';
+            if (!state.schedule[state.activeModalDateStr]) {
+                state.schedule[state.activeModalDateStr] = [];
+            }
+
+            state.schedule[state.activeModalDateStr].push({
+                id: Date.now().toString(),
+                title: title,
+                subject: subject,
+                completed: false
+            });
+
+            el.scheduleTopicInput.value = '';
+            saveSchedule();
+        }
+
+        window.toggleScheduleTopic = function(id) {
+            if (!state.activeModalDateStr || !state.schedule[state.activeModalDateStr]) return;
+            state.schedule[state.activeModalDateStr] = state.schedule[state.activeModalDateStr].map(t => 
+                t.id === id ? { ...t, completed: !t.completed } : t
+            );
+            saveSchedule();
+        };
+
+        window.deleteScheduleTopic = function(id) {
+            if (!state.activeModalDateStr || !state.schedule[state.activeModalDateStr]) return;
+            state.schedule[state.activeModalDateStr] = state.schedule[state.activeModalDateStr].filter(t => t.id !== id);
+            saveSchedule();
+        };
+
+        function saveSchedule() {
+            localStorage.setItem('lockin_calendar_schedule', JSON.stringify(state.schedule));
+            renderDayTopics();
+            renderCalendar();
+        }
+
+        function renderDayTopics() {
+            el.dayTopicsList.innerHTML = '';
+            const topics = state.schedule[state.activeModalDateStr] || [];
+
+            if (topics.length === 0) {
+                el.dayTopicsList.innerHTML = `<div class="text-center py-6 text-zinc-500 text-xs">No topics scheduled for this date. Add one above!</div>`;
+                return;
+            }
+
+            topics.forEach(t => {
+                const subObj = subjectsData.find(s => s.id === t.subject) || { name: 'General' };
+                const item = document.createElement('div');
+                item.className = `flex items-center justify-between p-2.5 rounded-xl border transition-all ${
+                    t.completed 
+                        ? 'bg-zinc-900/30 border-zinc-800/40 text-zinc-500 line-through' 
+                        : 'bg-zinc-900/80 border-zinc-800 text-zinc-200'
+                }`;
+                item.innerHTML = `
+                    <div class="flex items-center gap-2 overflow-hidden">
+                        <button type="button" onclick="toggleScheduleTopic('${t.id}')" class="w-4 h-4 rounded border ${
+                            t.completed ? 'bg-indigo-600 border-indigo-600 text-white' : 'border-zinc-700'
+                        } flex items-center justify-center transition-colors">
+                            ${t.completed ? '<i data-lucide="check" class="w-3 h-3"></i>' : ''}
+                        </button>
+                        <span class="text-[9px] uppercase font-bold px-1.5 py-0.5 rounded bg-indigo-500/10 text-indigo-400 border border-indigo-500/20">${subObj.name}</span>
+                        <span class="text-xs font-medium truncate">${escapeHtml(t.title)}</span>
+                    </div>
+                    <button type="button" onclick="deleteScheduleTopic('${t.id}')" class="text-zinc-600 hover:text-red-400 p-1 transition-colors">
+                        <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
+                    </button>
+                `;
+                el.dayTopicsList.appendChild(item);
+            });
+            if (window.lucide) lucide.createIcons();
         }
 
         // Daily Goal & Analytics Engine (Week Starting Sunday)
@@ -907,6 +1319,10 @@
 
         // Global Event Listeners Registration
         function setupEventListeners() {
+            // Notification permission handlers
+            if (el.enableNotifHeaderBtn) el.enableNotifHeaderBtn.addEventListener('click', requestNotificationPermission);
+            if (el.requestNotifModalBtn) el.requestNotifModalBtn.addEventListener('click', requestNotificationPermission);
+
             // PIN events
             el.unlockPinBtn.addEventListener('click', verifyPin);
             el.pinInput.addEventListener('keydown', (e) => { if (e.key === 'Enter') verifyPin(); });
@@ -930,6 +1346,31 @@
                 state.selectedSubject = e.target.value;
                 renderCurriculumPills();
                 renderTasks();
+            });
+
+            // Calendar Navigation Controls
+            el.prevMonthBtn.addEventListener('click', () => {
+                state.currentCalendarDate.setMonth(state.currentCalendarDate.getMonth() - 1);
+                renderCalendar();
+            });
+
+            el.nextMonthBtn.addEventListener('click', () => {
+                state.currentCalendarDate.setMonth(state.currentCalendarDate.getMonth() + 1);
+                renderCalendar();
+            });
+
+            // Day Modal Scheduler listeners
+            el.addScheduleTopicBtn.addEventListener('click', handleAddScheduleTopic);
+            el.scheduleTopicInput.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    handleAddScheduleTopic();
+                }
+            });
+
+            el.closeDayModalBtn.addEventListener('click', () => el.dayScheduleModal.classList.add('hidden'));
+            el.dayScheduleModal.addEventListener('click', (e) => {
+                if (e.target === el.dayScheduleModal) el.dayScheduleModal.classList.add('hidden');
             });
 
             // Timer controls
@@ -956,17 +1397,25 @@
                 const sMin = parseInt(el.inputStudyMin.value) || 25;
                 const shMin = parseInt(el.inputShortMin.value) || 5;
                 const gHours = parseInt(el.inputDailyGoalHours.value) || 4;
+                const remTime = el.inputReminderTime.value || '08:00';
                 const pin = el.inputPinCode.value.trim();
 
                 state.timer.durations.study = sMin * 60;
                 state.timer.durations.shortBreak = shMin * 60;
                 state.dailyGoalHours = gHours;
+                state.dailyReminderTime = remTime;
                 state.pinCode = pin;
 
                 if (pin.length === 4) localStorage.setItem('lockin_pincode', pin);
                 else localStorage.removeItem('lockin_pincode');
                 
-                localStorage.setItem('lockin_durations', JSON.stringify({ study: state.timer.durations.study, shortBreak: state.timer.durations.shortBreak, dailyGoalHours: gHours }));
+                localStorage.setItem('lockin_durations', JSON.stringify({
+                    study: state.timer.durations.study,
+                    shortBreak: state.timer.durations.shortBreak,
+                    dailyGoalHours: gHours,
+                    dailyReminderTime: remTime
+                }));
+
                 el.settingsPanel.classList.add('hidden');
                 resetTimer();
                 renderAnalytics();
@@ -974,6 +1423,7 @@
 
             el.clearCompletedBtn.addEventListener('click', clearCompleted);
 
+            // Zen Mode controls
             el.enterZenBtn.addEventListener('click', () => {
                 el.zenOverlay.classList.remove('hidden');
                 if (document.documentElement.requestFullscreen) document.documentElement.requestFullscreen().catch(() => {});
@@ -992,6 +1442,9 @@
                     if (!el.settingsPanel.classList.contains('hidden')) {
                         el.settingsPanel.classList.add('hidden');
                     }
+                    if (!el.dayScheduleModal.classList.contains('hidden')) {
+                        el.dayScheduleModal.classList.add('hidden');
+                    }
                 }
             });
 
@@ -1006,10 +1459,12 @@
                     if (parsed.study) state.timer.durations.study = parsed.study;
                     if (parsed.shortBreak) state.timer.durations.shortBreak = parsed.shortBreak;
                     if (parsed.dailyGoalHours) state.dailyGoalHours = parsed.dailyGoalHours;
+                    if (parsed.dailyReminderTime) state.dailyReminderTime = parsed.dailyReminderTime;
 
                     el.inputStudyMin.value = state.timer.durations.study / 60;
                     el.inputShortMin.value = state.timer.durations.shortBreak / 60;
                     el.inputDailyGoalHours.value = state.dailyGoalHours;
+                    el.inputReminderTime.value = state.dailyReminderTime;
                     state.timer.remaining = state.timer.durations.study;
                 } catch (e) {}
             }

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <link rel="icon" type="image/x-icon" href="/logo.png">
+    <link rel="icon" type="image/png" href="logo.png">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -75,6 +75,7 @@
 </head>
 <body class="bg-zinc-950 text-zinc-100 min-h-screen flex flex-col justify-between selection:bg-indigo-500 selection:text-white pb-20 md:pb-0">
 
+    <!-- PIN Lock Overlay -->
     <div id="pinLockOverlay" class="hidden fixed inset-0 bg-zinc-950 z-50 flex flex-col items-center justify-center p-6 text-center">
         <div class="glass p-8 rounded-3xl border border-zinc-800 max-w-sm w-full space-y-6 shadow-2xl">
             <div class="w-14 h-14 bg-indigo-500/10 rounded-2xl border border-indigo-500/20 flex items-center justify-center mx-auto text-indigo-400">
@@ -94,19 +95,19 @@
         </div>
     </div>
 
-    <header class="border-b border-zinc-800/80 px-4 md:px-8 py-3.5 bg-zinc-950/80 sticky top-0 z-40 backdrop-blur-md">
+    <!-- Main Navigation Header -->
+    <header class="border-b border-zinc-800/80 px-4 md:px-8 py-3 bg-zinc-950/80 sticky top-0 z-40 backdrop-blur-md">
         <div class="max-w-7xl mx-auto flex items-center justify-between">
             <div class="flex items-center gap-3">
-                <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-indigo-600 to-violet-500 flex items-center justify-center shadow-lg shadow-indigo-500/20">
-                    <i data-lucide="zap" class="w-5 h-5 text-white"></i>
-                </div>
+                <img src="logo.png" alt="LockIn Logo" class="w-9 h-9 object-contain rounded-xl border border-zinc-800 bg-zinc-900/50 p-0.5 shadow-md shadow-indigo-500/10" onerror="this.onerror=null; this.src='https://placehold.co/100x100/4f46e5/ffffff?text=LI';">
                 <div>
-                    <h1 class="font-bold text-base md:text-lg leading-none tracking-tight">LOCKIN</h1>
+                    <h1 class="font-extrabold text-base md:text-lg leading-none tracking-tight">LOCKIN</h1>
+                    <span class="text-[10px] text-zinc-500 font-semibold tracking-wider uppercase block mt-0.5">Study & Memorize OS</span>
                 </div>
             </div>
 
             <div class="flex items-center gap-2">
-                <div class="flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl bg-amber-500/10 border border-amber-500/20 text-amber-400 text-xs font-bold" title="Current Daily Study Streak">
+                <div class="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-amber-500/10 border border-amber-500/20 text-amber-400 text-xs font-bold" title="Current Daily Study Streak">
                     <i data-lucide="flame" class="w-3.5 h-3.5 fill-amber-400 text-amber-500 animate-pulse"></i>
                     <span id="headerStreakText">0 Day Streak</span>
                 </div>
@@ -128,9 +129,11 @@
         </div>
     </header>
 
+    <!-- Main Content Container -->
     <main class="max-w-7xl mx-auto px-4 md:px-8 py-4 md:py-6 w-full flex-grow space-y-6">
 
-        <section class="glass rounded-3xl p-6 md:p-8 border border-zinc-800/80 relative overflow-hidden">
+        <!-- Top Banner / Countdown & Verses -->
+        <section class="glass rounded-3xl p-6 md:p-8 border border-zinc-800/80 relative overflow-hidden shadow-xl">
             <div class="absolute -right-12 -bottom-12 w-64 h-64 bg-indigo-500/10 rounded-full blur-3xl pointer-events-none"></div>
             <div class="flex flex-col md:flex-row items-center justify-between gap-6 relative z-10">
                 <div class="space-y-2 text-center md:text-left flex-1">
@@ -138,34 +141,35 @@
                         <i data-lucide="calendar" class="w-3.5 h-3.5"></i> Final Exam Target: Nov 27
                     </span>
                     <h2 class="text-2xl md:text-3xl font-extrabold tracking-tight">Time to Lock In & Master Lessons</h2>
-                    <div class="min-h-[40px] flex items-center justify-center md:justify-start">
-                        <p id="quranAyatDisplay" class="text-xs md:text-sm text-indigo-300 italic max-w-xl ayat-fade font-serif">
+                    <div class="min-h-[48px] flex items-center justify-center md:justify-start">
+                        <p id="quranAyatDisplay" class="text-xs md:text-sm text-indigo-300 italic max-w-2xl ayat-fade font-serif leading-relaxed">
                             "Verily, with hardship comes ease." (Surah Ash-Sharh 94:6)
                         </p>
                     </div>
                 </div>
 
                 <div class="flex items-center gap-2 text-center">
-                    <div class="bg-zinc-950/80 border border-zinc-800 rounded-xl p-3 min-w-[65px] md:min-w-[80px]">
-                        <span id="cdDays" class="block text-2xl md:text-3xl font-extrabold text-indigo-400">00</span>
-                        <span class="text-[10px] md:text-xs text-zinc-500 uppercase font-semibold">Days</span>
+                    <div class="bg-zinc-950/80 border border-zinc-800 rounded-2xl p-3 min-w-[70px] md:min-w-[85px] shadow-inner">
+                        <span id="cdDays" class="block text-2xl md:text-3xl font-black text-indigo-400">00</span>
+                        <span class="text-[10px] md:text-xs text-zinc-500 uppercase font-semibold tracking-wider">Days</span>
                     </div>
-                    <div class="bg-zinc-950/80 border border-zinc-800 rounded-xl p-3 min-w-[65px] md:min-w-[80px]">
-                        <span id="cdHours" class="block text-2xl md:text-3xl font-extrabold text-zinc-200">00</span>
-                        <span class="text-[10px] md:text-xs text-zinc-500 uppercase font-semibold">Hours</span>
+                    <div class="bg-zinc-950/80 border border-zinc-800 rounded-2xl p-3 min-w-[70px] md:min-w-[85px] shadow-inner">
+                        <span id="cdHours" class="block text-2xl md:text-3xl font-black text-zinc-200">00</span>
+                        <span class="text-[10px] md:text-xs text-zinc-500 uppercase font-semibold tracking-wider">Hours</span>
                     </div>
-                    <div class="bg-zinc-950/80 border border-zinc-800 rounded-xl p-3 min-w-[65px] md:min-w-[80px]">
-                        <span id="cdMins" class="block text-2xl md:text-3xl font-extrabold text-zinc-200">00</span>
-                        <span class="text-[10px] md:text-xs text-zinc-500 uppercase font-semibold">Mins</span>
+                    <div class="bg-zinc-950/80 border border-zinc-800 rounded-2xl p-3 min-w-[70px] md:min-w-[85px] shadow-inner">
+                        <span id="cdMins" class="block text-2xl md:text-3xl font-black text-zinc-200">00</span>
+                        <span class="text-[10px] md:text-xs text-zinc-500 uppercase font-semibold tracking-wider">Mins</span>
                     </div>
-                    <div class="bg-zinc-950/80 border border-zinc-800 rounded-xl p-3 min-w-[65px] md:min-w-[80px]">
-                        <span id="cdSecs" class="block text-2xl md:text-3xl font-extrabold text-zinc-200">00</span>
-                        <span class="text-[10px] md:text-xs text-zinc-500 uppercase font-semibold">Secs</span>
+                    <div class="bg-zinc-950/80 border border-zinc-800 rounded-2xl p-3 min-w-[70px] md:min-w-[85px] shadow-inner">
+                        <span id="cdSecs" class="block text-2xl md:text-3xl font-black text-zinc-200">00</span>
+                        <span class="text-[10px] md:text-xs text-zinc-500 uppercase font-semibold tracking-wider">Secs</span>
                     </div>
                 </div>
             </div>
         </section>
 
+        <!-- Stats Overview Cards -->
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
 
             <div class="glass rounded-2xl p-5 border border-zinc-800/80 flex items-center justify-between">
@@ -212,12 +216,15 @@
 
         </div>
 
+        <!-- Main Workspace (2 Columns) -->
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
 
-            <div class="lg:col-span-6 space-y-6">
+            <!-- Left Workspace Column -->
+            <div class="lg:col-span-6 space-y-6 flex flex-col">
 
-                <div class="glass rounded-2xl p-6 md:p-8 flex flex-col items-center text-center relative border border-zinc-800/80">
-                    <div class="flex items-center gap-1 bg-zinc-900/90 p-1.5 rounded-xl border border-zinc-800 mb-8 w-full max-w-sm justify-between">
+                <!-- Pomodoro Focus Timer -->
+                <div class="glass rounded-3xl p-6 md:p-8 flex flex-col items-center text-center relative border border-zinc-800/80 shadow-lg">
+                    <div class="flex items-center gap-1 bg-zinc-900/90 p-1.5 rounded-xl border border-zinc-800 mb-6 w-full max-w-sm justify-between">
                         <button data-mode="study" class="timer-mode-btn flex-1 py-1.5 text-xs font-semibold rounded-lg bg-indigo-600 text-white transition-all shadow-sm">
                             Focus (25m)
                         </button>
@@ -229,7 +236,7 @@
                         </button>
                     </div>
 
-                    <div class="relative w-64 h-64 md:w-72 md:h-72 flex items-center justify-center my-2">
+                    <div class="relative w-60 h-60 md:w-68 md:h-68 flex items-center justify-center my-2">
                         <svg class="w-full h-full transform -rotate-90" viewBox="0 0 100 100">
                             <circle cx="50" cy="50" r="44" stroke="currentColor" stroke-width="4" fill="transparent" class="text-zinc-800/60"></circle>
                             <circle id="timerProgressRing" cx="50" cy="50" r="44" stroke="currentColor" stroke-width="4" fill="transparent" stroke-dasharray="276.46" stroke-dashoffset="0" stroke-linecap="round" class="text-indigo-500 transition-all duration-300"></circle>
@@ -240,7 +247,7 @@
                         </div>
                     </div>
 
-                    <div class="flex items-center justify-center gap-3 md:gap-4 mt-6 md:mt-8 w-full">
+                    <div class="flex items-center justify-center gap-3 md:gap-4 mt-6 w-full">
                         <button id="startPauseBtn" class="flex-1 max-w-[180px] min-h-[48px] flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-semibold text-base transition-all shadow-lg shadow-indigo-600/30 active:scale-95">
                             <i data-lucide="play" id="startPauseIcon" class="w-5 h-5 fill-current"></i>
                             <span id="startPauseText">Start Focus</span>
@@ -254,14 +261,16 @@
                     </div>
                 </div>
 
-                <div class="glass rounded-2xl p-5 md:p-6 border border-zinc-800/80 space-y-4">
-                    <div class="flex items-center justify-between">
+                <!-- Curriculum Subject Selection -->
+                <div class="glass rounded-3xl p-5 md:p-6 border border-zinc-800/80 space-y-4 flex-1">
+                    <div class="flex items-center justify-between border-b border-zinc-800/80 pb-3">
                         <h3 class="font-bold text-base flex items-center gap-2">
-                            <i data-lucide="book-open" class="w-5 h-5 text-indigo-400"></i> Your Curriculum (14 Subjects)
+                            <i data-lucide="book-open" class="w-5 h-5 text-indigo-400"></i> Curriculum Subjects (14)
                         </h3>
+                        <span class="text-xs text-zinc-500">Filter topics below</span>
                     </div>
 
-                    <div class="space-y-4 touch-scroll max-h-[220px] overflow-y-auto pr-1">
+                    <div class="space-y-4 touch-scroll max-h-[260px] overflow-y-auto pr-1">
                         <div>
                             <span class="text-[11px] font-semibold text-zinc-400 uppercase tracking-wider block mb-2">Arabic Language & Literature</span>
                             <div class="flex flex-wrap gap-1.5" id="catArabic"></div>
@@ -281,15 +290,17 @@
 
             </div>
 
-            <div class="lg:col-span-6 space-y-6">
+            <!-- Right Workspace Column -->
+            <div class="lg:col-span-6 space-y-6 flex flex-col">
 
-                <div class="glass rounded-2xl p-5 md:p-6 border border-zinc-800/80 flex flex-col min-h-[380px]">
+                <!-- Subject Topics Tracker & Creator -->
+                <div class="glass rounded-3xl p-5 md:p-6 border border-zinc-800/80 flex flex-col h-full shadow-lg">
                     <div class="space-y-3 pb-4 border-b border-zinc-800">
                         <div class="flex items-center justify-between">
                             <h3 class="font-bold text-base flex items-center gap-2">
-                                <i data-lucide="layers" class="w-5 h-5 text-indigo-400"></i> Subject Topics Tracker
+                                <i data-lucide="layers" class="w-5 h-5 text-indigo-400"></i> Subject Topics & Memorization
                             </h3>
-                            <span id="taskProgressPercent" class="text-xs font-bold px-2 py-0.5 rounded-full bg-indigo-500/10 text-indigo-400 border border-indigo-500/20">0% Done</span>
+                            <span id="taskProgressPercent" class="text-xs font-bold px-2.5 py-1 rounded-full bg-indigo-500/10 text-indigo-400 border border-indigo-500/20">0% Done</span>
                         </div>
 
                         <div class="w-full bg-zinc-900 rounded-full h-2 overflow-hidden border border-zinc-800">
@@ -298,23 +309,24 @@
                     </div>
 
                     <div class="mt-4 space-y-2">
-                        <label class="text-[11px] font-semibold text-zinc-400 uppercase tracking-wider block">Add Topic for Selected Subject</label>
+                        <label class="text-[11px] font-semibold text-zinc-400 uppercase tracking-wider block">Add New Topic for Selected Subject</label>
                         <div class="flex gap-2">
                             <select id="taskSubjectSelect" class="bg-zinc-900 border border-zinc-800 rounded-xl px-2.5 py-3 text-xs text-zinc-300 focus:outline-none focus:border-indigo-500 cursor-pointer min-h-[44px]">
                             </select>
                             <input type="text" id="taskInput" placeholder="Enter topic name..." class="flex-1 min-h-[44px] bg-zinc-900 border border-zinc-800 rounded-xl px-3 py-2.5 text-xs text-zinc-100 placeholder-zinc-500 focus:outline-none focus:border-indigo-500 transition-colors">
-                            <button id="submitTaskBtn" type="button" class="min-h-[44px] min-w-[44px] px-3 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-medium text-xs flex items-center justify-center transition-all active:scale-95 shadow-sm">
-                                <i data-lucide="plus" class="w-5 h-5"></i>
+                            <button id="submitTaskBtn" type="button" class="min-h-[44px] px-4 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-medium text-xs flex items-center justify-center gap-1.5 transition-all active:scale-95 shadow-md shadow-indigo-600/20">
+                                <i data-lucide="plus" class="w-4 h-4"></i>
+                                <span>Add Topic</span>
                             </button>
                         </div>
                     </div>
 
-                    <div class="flex items-center justify-between mt-4 text-xs text-zinc-400">
+                    <div class="flex items-center justify-between mt-4 text-xs text-zinc-400 border-t border-zinc-800/40 pt-3">
                         <span id="taskCountText">0 topics remaining</span>
                         <button id="clearCompletedBtn" type="button" class="hover:text-zinc-200 transition-colors py-1">Clear finished topics</button>
                     </div>
 
-                    <div id="taskList" class="mt-3 flex-1 overflow-y-auto space-y-2.5 pr-1 max-h-[250px] touch-scroll">
+                    <div id="taskList" class="mt-3 flex-1 overflow-y-auto space-y-2.5 pr-1 max-h-[340px] touch-scroll">
                     </div>
                 </div>
 
@@ -322,26 +334,27 @@
 
         </div>
 
-        <section class="glass rounded-3xl p-6 md:p-8 border border-zinc-800/80 space-y-6">
+        <!-- Memorization Calendar Schedule -->
+        <section class="glass rounded-3xl p-6 md:p-8 border border-zinc-800/80 space-y-6 shadow-xl">
             <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-zinc-800/80 pb-4">
                 <div>
                     <h3 class="text-xl font-bold flex items-center gap-2">
                         <i data-lucide="calendar-days" class="w-6 h-6 text-indigo-400"></i> Memorization Schedule Calendar
                     </h3>
-                    <p class="text-xs text-zinc-400 mt-1">Plan your daily topic targets and check off your memorization milestones.</p>
+                    <p class="text-xs text-zinc-400 mt-1">Plan your recurring memorization days and track your daily targets.</p>
                 </div>
                 <div class="flex items-center gap-2">
                     <button id="prevMonthBtn" class="p-2 rounded-xl bg-zinc-900 border border-zinc-800 hover:bg-zinc-800 text-zinc-300 transition-colors">
                         <i data-lucide="chevron-left" class="w-4 h-4"></i>
                     </button>
-                    <span id="calendarMonthYear" class="text-sm font-bold min-w-[120px] text-center">Month Year</span>
+                    <span id="calendarMonthYear" class="text-sm font-bold min-w-[130px] text-center">Month Year</span>
                     <button id="nextMonthBtn" class="p-2 rounded-xl bg-zinc-900 border border-zinc-800 hover:bg-zinc-800 text-zinc-300 transition-colors">
                         <i data-lucide="chevron-right" class="w-4 h-4"></i>
                     </button>
                 </div>
             </div>
 
-            <div class="grid grid-cols-7 gap-1 text-center font-semibold text-xs text-zinc-400 py-1">
+            <div class="grid grid-cols-7 gap-1 text-center font-semibold text-xs text-zinc-400 py-1 uppercase tracking-wider">
                 <div>Sun</div>
                 <div>Mon</div>
                 <div>Tue</div>
@@ -357,6 +370,83 @@
 
     </main>
 
+    <!-- NEW MODAL: Recurring Memorization Days Prompt when adding Topic -->
+    <div id="memorizeDaysModal" class="hidden fixed inset-0 bg-zinc-950/80 backdrop-blur-md z-50 flex items-center justify-center p-4">
+        <div class="glass max-w-md w-full rounded-3xl p-6 border border-zinc-800 shadow-2xl space-y-5 relative animate-in fade-in zoom-in duration-200">
+            <div class="flex items-center justify-between border-b border-zinc-800 pb-3">
+                <div class="flex items-center gap-2">
+                    <div class="p-2 rounded-xl bg-indigo-500/10 text-indigo-400 border border-indigo-500/20">
+                        <i data-lucide="calendar-range" class="w-5 h-5"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-base">Schedule Memorization</h3>
+                        <p id="promptTopicTitle" class="text-xs text-indigo-300 font-medium truncate max-w-[240px]">Topic Title</p>
+                    </div>
+                </div>
+                <button id="cancelMemorizeModalBtn" class="text-zinc-400 hover:text-white p-1 rounded-lg hover:bg-zinc-800 transition-colors">
+                    <i data-lucide="x" class="w-5 h-5"></i>
+                </button>
+            </div>
+
+            <div class="space-y-4">
+                <div>
+                    <label class="text-xs font-semibold text-zinc-400 uppercase tracking-wider block mb-2">Which days of the week do you memorize this?</label>
+                    <div class="grid grid-cols-7 gap-1.5" id="dayOfWeekSelector">
+                        <label class="flex flex-col items-center justify-center p-2 rounded-xl bg-zinc-900 border border-zinc-800 cursor-pointer hover:border-indigo-500 transition-all text-center">
+                            <input type="checkbox" value="0" class="sr-only peer" checked>
+                            <span class="text-xs font-bold text-zinc-400 peer-checked:text-indigo-400">Sun</span>
+                            <span class="w-1.5 h-1.5 rounded-full bg-zinc-700 peer-checked:bg-indigo-500 mt-1"></span>
+                        </label>
+                        <label class="flex flex-col items-center justify-center p-2 rounded-xl bg-zinc-900 border border-zinc-800 cursor-pointer hover:border-indigo-500 transition-all text-center">
+                            <input type="checkbox" value="1" class="sr-only peer" checked>
+                            <span class="text-xs font-bold text-zinc-400 peer-checked:text-indigo-400">Mon</span>
+                            <span class="w-1.5 h-1.5 rounded-full bg-zinc-700 peer-checked:bg-indigo-500 mt-1"></span>
+                        </label>
+                        <label class="flex flex-col items-center justify-center p-2 rounded-xl bg-zinc-900 border border-zinc-800 cursor-pointer hover:border-indigo-500 transition-all text-center">
+                            <input type="checkbox" value="2" class="sr-only peer" checked>
+                            <span class="text-xs font-bold text-zinc-400 peer-checked:text-indigo-400">Tue</span>
+                            <span class="w-1.5 h-1.5 rounded-full bg-zinc-700 peer-checked:bg-indigo-500 mt-1"></span>
+                        </label>
+                        <label class="flex flex-col items-center justify-center p-2 rounded-xl bg-zinc-900 border border-zinc-800 cursor-pointer hover:border-indigo-500 transition-all text-center">
+                            <input type="checkbox" value="3" class="sr-only peer" checked>
+                            <span class="text-xs font-bold text-zinc-400 peer-checked:text-indigo-400">Wed</span>
+                            <span class="w-1.5 h-1.5 rounded-full bg-zinc-700 peer-checked:bg-indigo-500 mt-1"></span>
+                        </label>
+                        <label class="flex flex-col items-center justify-center p-2 rounded-xl bg-zinc-900 border border-zinc-800 cursor-pointer hover:border-indigo-500 transition-all text-center">
+                            <input type="checkbox" value="4" class="sr-only peer" checked>
+                            <span class="text-xs font-bold text-zinc-400 peer-checked:text-indigo-400">Thu</span>
+                            <span class="w-1.5 h-1.5 rounded-full bg-zinc-700 peer-checked:bg-indigo-500 mt-1"></span>
+                        </label>
+                        <label class="flex flex-col items-center justify-center p-2 rounded-xl bg-zinc-900 border border-zinc-800 cursor-pointer hover:border-indigo-500 transition-all text-center">
+                            <input type="checkbox" value="5" class="sr-only peer">
+                            <span class="text-xs font-bold text-zinc-400 peer-checked:text-indigo-400">Fri</span>
+                            <span class="w-1.5 h-1.5 rounded-full bg-zinc-700 peer-checked:bg-indigo-500 mt-1"></span>
+                        </label>
+                        <label class="flex flex-col items-center justify-center p-2 rounded-xl bg-zinc-900 border border-zinc-800 cursor-pointer hover:border-indigo-500 transition-all text-center">
+                            <input type="checkbox" value="6" class="sr-only peer">
+                            <span class="text-xs font-bold text-zinc-400 peer-checked:text-indigo-400">Sat</span>
+                            <span class="w-1.5 h-1.5 rounded-full bg-zinc-700 peer-checked:bg-indigo-500 mt-1"></span>
+                        </label>
+                    </div>
+                </div>
+
+                <div>
+                    <label class="text-xs font-semibold text-zinc-400 uppercase tracking-wider block mb-1">When do you stop memorizing this topic?</label>
+                    <input type="date" id="memorizeStopDate" class="w-full bg-zinc-900 border border-zinc-800 rounded-xl px-3 py-2.5 text-xs text-zinc-100 focus:outline-none focus:border-indigo-500">
+                    <span class="text-[10px] text-zinc-500 mt-1 block">Topic will automatically be scheduled on selected weekdays up to this target end date.</span>
+                </div>
+            </div>
+
+            <div class="flex gap-3 pt-2">
+                <button id="saveMemorizeScheduleBtn" type="button" class="w-full py-3 rounded-xl bg-indigo-600 hover:bg-indigo-500 font-semibold text-xs text-white transition-all shadow-lg shadow-indigo-600/20 active:scale-95 flex items-center justify-center gap-2">
+                    <i data-lucide="check-circle" class="w-4 h-4"></i>
+                    <span>Confirm & Add Schedule</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Day Schedule Modal Details -->
     <div id="dayScheduleModal" class="hidden fixed inset-0 bg-zinc-950/80 backdrop-blur-md z-50 flex items-center justify-center p-4">
         <div class="glass max-w-lg w-full rounded-3xl p-6 border border-zinc-800 shadow-2xl space-y-5 relative">
             <div class="flex items-center justify-between border-b border-zinc-800 pb-3">
@@ -391,6 +481,7 @@
         </div>
     </div>
 
+    <!-- Settings Modal -->
     <div id="settingsPanel" class="hidden fixed inset-0 bg-zinc-950/80 backdrop-blur-md z-50 flex items-center justify-center p-4">
         <div class="glass max-w-md w-full rounded-3xl p-6 border border-zinc-800 shadow-2xl space-y-6 relative animate-in fade-in zoom-in duration-200">
             <div class="flex items-center justify-between border-b border-zinc-800 pb-3">
@@ -440,6 +531,7 @@
         </div>
     </div>
 
+    <!-- Mobile Bottom Navigation Bar -->
     <div class="fixed bottom-0 left-0 right-0 bg-zinc-950/95 border-t border-zinc-800 backdrop-blur-lg z-40 md:hidden px-6 py-2 flex items-center justify-around">
         <button id="mobileNavTimer" type="button" class="flex flex-col items-center gap-1 text-indigo-400 font-medium">
             <i data-lucide="timer" class="w-5 h-5"></i>
@@ -459,6 +551,7 @@
         </button>
     </div>
 
+    <!-- Hush (Zen Focus) Overlay -->
     <div id="zenOverlay" class="hidden fixed inset-0 bg-zinc-950 z-50 flex flex-col items-center justify-between p-6 text-center">
         <div class="w-full max-w-xl flex items-center justify-between">
             <span class="text-xs font-semibold tracking-widest text-indigo-400 uppercase">HUSH MODE</span>
@@ -482,9 +575,19 @@
     </div>
 
     <script>
-        // Motivational Quran Ayat collection
+        // Expanded Quranic Verses Collection
         const quranAyatList = [
             `"Verily, with hardship comes ease." (Surah Ash-Sharh 94:6)`,
+            `"For indeed, with hardship [will be] ease." (Surah Ash-Sharh 94:5)`,
+            `"O you who have believed, persevere and endure and remain stationed and fear Allah that you may succeed." (Surah Ali 'Imran 3:200)`,
+            `"And those who strive for Us - We will surely guide them to Our ways." (Surah Al-'Ankabut 29:69)`,
+            `"Our Lord, grant us from Yourself mercy and prepare for us from our affair right guidance." (Surah Al-Kahf 18:10)`,
+            `"It is You we worship and You we ask for help." (Surah Al-Fatihah 1:5)`,
+            `"So remember Me; I will remember you. And be grateful to Me and do not deny Me." (Surah Al-Baqarah 2:152)`,
+            `"Is one who is devoutly obedient during periods of the night, prostrating and standing [in prayer], fearing the Hereafter and hoping for the mercy of his Lord, [like one who does not]?" (Surah Az-Zumar 39:9)`,
+            `"And rely upon Allah; and sufficient is Allah as Disposer of affairs." (Surah Al-Ahzab 33:3)`,
+            `"And when the prayer has been concluded, disperse within the land and seek from the bounty of Allah, and remember Allah often that you may succeed." (Surah Al-Jumu'ah 62:10)`,
+            `"Is the reward for good [anything] but good?" (Surah Ar-Rahman 55:60)`,
             `"And that there is not for man except that [good] for which he strives." (Surah An-Najm 53:39)`,
             `"So when you have decided, then rely upon Allah. Indeed, Allah loves those who rely [upon Him]." (Surah Ali 'Imran 3:159)`,
             `"Allah does not burden a soul beyond that it can bear." (Surah Al-Baqarah 2:286)`,
@@ -537,7 +640,7 @@
                     .catch((err) => console.log('SW Registration error:', err));
             }
 
-            // Inject dynamic Manifest for Mobile PWA installation
+            // Manifest for PWA
             const manifestObj = {
                 name: "LockIn Study OS",
                 short_name: "LockIn",
@@ -545,7 +648,7 @@
                 display: "standalone",
                 background_color: "#09090b",
                 theme_color: "#09090b",
-                icons: [{ src: "/logo.png", sizes: "192x192", type: "image/png" }]
+                icons: [{ src: "logo.png", sizes: "192x192", type: "image/png" }]
             };
             const manifestBlob = new Blob([JSON.stringify(manifestObj)], { type: 'application/json' });
             const manifestURL = URL.createObjectURL(manifestBlob);
@@ -594,7 +697,7 @@
             if ('Notification' in window && Notification.permission === 'granted') {
                 const options = {
                     body: body,
-                    icon: '/logo.png',
+                    icon: 'logo.png',
                     tag: tag,
                     renotify: true,
                     requireInteraction: true,
@@ -658,7 +761,7 @@
             { id: 'ahya', name: 'Ahya', cat: 'science' }
         ];
 
-        // Central State Management
+        // Central Application State
         const state = {
             targetDate: new Date('2026-11-27T00:00:00'),
             timer: {
@@ -678,7 +781,7 @@
             selectedSubject: 'nahu',
             currentCalendarDate: new Date(),
             activeModalDateStr: null,
-            audio: { ctx: null, activeType: null, nodes: [], gainNode: null, volume: 0.3 }
+            pendingNewTopic: null
         };
 
         // Cache DOM Elements
@@ -750,16 +853,20 @@
             mobileNavTimer: document.getElementById('mobileNavTimer'),
             mobileNavTasks: document.getElementById('mobileNavTasks'),
             mobileNavZen: document.getElementById('mobileNavZen'),
-            mobileNavSettings: document.getElementById('mobileNavSettings')
+            mobileNavSettings: document.getElementById('mobileNavSettings'),
+            // New Memorization Schedule Modal
+            memorizeDaysModal: document.getElementById('memorizeDaysModal'),
+            promptTopicTitle: document.getElementById('promptTopicTitle'),
+            memorizeStopDate: document.getElementById('memorizeStopDate'),
+            cancelMemorizeModalBtn: document.getElementById('cancelMemorizeModalBtn'),
+            saveMemorizeScheduleBtn: document.getElementById('saveMemorizeScheduleBtn')
         };
 
-        // Date helper key format (YYYY-MM-DD)
         function getTodayKey() {
             const today = new Date();
             return `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}-${String(today.getDate()).padStart(2, '0')}`;
         }
 
-        // Global functions for inline item deletion/completion
         window.toggleTask = function(id) {
             state.tasks = state.tasks.map(t => t.id === id ? { ...t, completed: !t.completed } : t);
             saveTasks();
@@ -770,7 +877,7 @@
             saveTasks();
         };
 
-        // Bootstrap App
+        // Initialize Application
         window.addEventListener('DOMContentLoaded', () => {
             if (window.lucide) lucide.createIcons();
             initServiceWorker();
@@ -787,9 +894,16 @@
             setupEventListeners();
             startQuranAyatCycle();
             checkDailyReminderSchedule();
+            setDefaultStopDate();
         });
 
-        // PIN Lock Check
+        function setDefaultStopDate() {
+            const d = new Date();
+            d.setDate(d.getDate() + 14); // default 2 weeks out
+            const str = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+            if (el.memorizeStopDate) el.memorizeStopDate.value = str;
+        }
+
         function checkPinLock() {
             if (state.pinCode && state.pinCode.trim().length === 4) {
                 el.pinLockOverlay.classList.remove('hidden');
@@ -806,7 +920,6 @@
             }
         }
 
-        // 14 Subject Pills Render
         function renderCurriculumPills() {
             el.catArabic.innerHTML = '';
             el.catIslamic.innerHTML = '';
@@ -856,7 +969,6 @@
             el.taskSubjectSelect.value = state.selectedSubject;
         }
 
-        // Countdown Timer Engine
         function initCountdown() {
             function update() {
                 const now = new Date();
@@ -874,7 +986,6 @@
             setInterval(update, 1000);
         }
 
-        // Pomodoro Clock Logic
         function initTimer() { updateTimerDisplay(); }
 
         function updateTimerDisplay() {
@@ -902,7 +1013,6 @@
             el.zenStartPauseBtn.innerText = 'Pause Session';
             if (window.lucide) lucide.createIcons();
 
-            // Sticky Persistent Mobile Alert on session start
             if (state.timer.mode === 'study') {
                 const subName = state.selectedSubject.toUpperCase();
                 showPersistentNotification(
@@ -963,7 +1073,6 @@
             playNotificationChime();
             clearPersistentNotification('lockin-study-active');
 
-            // Record completed study minutes if in study mode
             if (state.timer.mode === 'study') {
                 const mins = Math.round(state.timer.durations.study / 60);
                 addCompletedFocusMinutes(mins);
@@ -978,7 +1087,72 @@
             switchTimerMode(state.timer.mode === 'study' ? 'shortBreak' : 'study');
         }
 
-        // Calendar Memorization Scheduler Component
+        // -------------------------------------------------------------
+        // NEW FEATURE: Topic Creation with Recurring Days & Stop Date
+        // -------------------------------------------------------------
+        function handleCreateTask() {
+            const val = el.taskInput.value.trim();
+            if (!val) return;
+            
+            const selectedSubject = el.taskSubjectSelect.value || state.selectedSubject;
+            
+            // Save pending topic info and prompt for memorization schedule
+            state.pendingNewTopic = {
+                title: val,
+                subject: selectedSubject
+            };
+
+            el.promptTopicTitle.innerText = `[${selectedSubject.toUpperCase()}] ${val}`;
+            el.memorizeDaysModal.classList.remove('hidden');
+        }
+
+        function finalizeTopicCreation(selectedDays, stopDateStr) {
+            if (!state.pendingNewTopic) return;
+
+            const newTopicObj = {
+                id: Date.now().toString(),
+                title: state.pendingNewTopic.title,
+                subject: state.pendingNewTopic.subject,
+                completed: false
+            };
+
+            state.tasks.unshift(newTopicObj);
+            el.taskInput.value = '';
+
+            // Automatically populate schedule calendar for chosen weekdays until stopDate
+            if (selectedDays.length > 0 && stopDateStr) {
+                const startDate = new Date();
+                const stopDate = new Date(stopDateStr + 'T23:59:59');
+                let curr = new Date(startDate);
+
+                while (curr <= stopDate) {
+                    const dayOfWeek = curr.getDay(); // 0 is Sun
+                    if (selectedDays.includes(dayOfWeek)) {
+                        const dateKey = `${curr.getFullYear()}-${String(curr.getMonth() + 1).padStart(2, '0')}-${String(curr.getDate()).padStart(2, '0')}`;
+                        if (!state.schedule[dateKey]) {
+                            state.schedule[dateKey] = [];
+                        }
+                        // Avoid duplicates for exact same topic on same day
+                        const alreadyExists = state.schedule[dateKey].some(t => t.title === newTopicObj.title && t.subject === newTopicObj.subject);
+                        if (!alreadyExists) {
+                            state.schedule[dateKey].push({
+                                id: Date.now().toString() + '_' + Math.random().toString(36).substr(2, 4),
+                                title: newTopicObj.title,
+                                subject: newTopicObj.subject,
+                                completed: false
+                            });
+                        }
+                    }
+                    curr.setDate(curr.getDate() + 1);
+                }
+                saveSchedule();
+            }
+
+            state.pendingNewTopic = null;
+            saveTasks();
+            el.memorizeDaysModal.classList.add('hidden');
+        }
+
         function renderCalendar() {
             const year = state.currentCalendarDate.getFullYear();
             const month = state.currentCalendarDate.getMonth();
@@ -987,11 +1161,10 @@
             el.calendarMonthYear.innerText = `${monthNames[month]} ${year}`;
             el.calendarGrid.innerHTML = '';
 
-            const firstDay = new Date(year, month, 1).getDay(); // 0 is Sunday
+            const firstDay = new Date(year, month, 1).getDay();
             const daysInMonth = new Date(year, month + 1, 0).getDate();
             const prevMonthDays = new Date(year, month, 0).getDate();
 
-            // Previous month padding days
             for (let i = firstDay - 1; i >= 0; i--) {
                 const dayDiv = document.createElement('div');
                 dayDiv.className = 'min-h-[75px] md:min-h-[90px] p-1.5 rounded-xl bg-zinc-900/30 border border-zinc-800/30 text-zinc-600 text-xs pointer-events-none opacity-40';
@@ -1001,7 +1174,6 @@
 
             const todayStr = getTodayKey();
 
-            // Current month days
             for (let day = 1; day <= daysInMonth; day++) {
                 const dateStr = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
                 const isToday = dateStr === todayStr;
@@ -1011,7 +1183,7 @@
                 const dayDiv = document.createElement('div');
                 dayDiv.className = `min-h-[75px] md:min-h-[90px] p-2 rounded-xl border transition-all cursor-pointer flex flex-col justify-between ${
                     isToday 
-                        ? 'bg-indigo-600/10 border-indigo-500/60 text-white' 
+                        ? 'bg-indigo-600/10 border-indigo-500/60 text-white shadow-md shadow-indigo-500/5' 
                         : 'bg-zinc-900/60 border-zinc-800 hover:border-zinc-700 text-zinc-200'
                 }`;
 
@@ -1127,7 +1299,6 @@
             if (window.lucide) lucide.createIcons();
         }
 
-        // Daily Goal & Analytics Engine (Week Starting Sunday)
         function addCompletedFocusMinutes(mins) {
             const todayKey = getTodayKey();
             state.analytics[todayKey] = (state.analytics[todayKey] || 0) + mins;
@@ -1141,7 +1312,6 @@
             const todayMins = state.analytics[todayKey] || 0;
             const targetMins = state.dailyGoalHours * 60;
             
-            // Text display
             if (todayMins >= 60) {
                 const hrs = (todayMins / 60).toFixed(1);
                 el.todayFocusHours.innerText = `${hrs}h`;
@@ -1150,18 +1320,16 @@
             }
             el.todayGoalLabel.innerText = `/ ${state.dailyGoalHours}h target`;
 
-            // Circle Progress
             const pct = Math.min(100, Math.round((todayMins / targetMins) * 100));
             el.dailyGoalCircle.setAttribute('stroke-dasharray', `${pct}, 100`);
             el.dailyGoalPercent.innerText = `${pct}%`;
 
-            // Weekly Bar Chart starting from Sunday
             el.weeklyBarChart.innerHTML = '';
             let totalWeeklyMins = 0;
             const daysArr = [];
 
             const now = new Date();
-            const currentDayOfWeek = now.getDay(); // 0 is Sunday
+            const currentDayOfWeek = now.getDay();
             const sunday = new Date(now);
             sunday.setDate(now.getDate() - currentDayOfWeek);
 
@@ -1193,7 +1361,6 @@
             el.weeklyTotalText.innerText = `${(totalWeeklyMins / 60).toFixed(1)}h Total`;
         }
 
-        // Streak Calculation Logic
         function checkAndUpdateStreak() {
             const todayKey = getTodayKey();
             const todayMins = state.analytics[todayKey] || 0;
@@ -1234,23 +1401,6 @@
                 osc.connect(gain); gain.connect(ctx.destination);
                 osc.start(ctx.currentTime); osc.stop(ctx.currentTime + 1.2);
             } catch (e) {}
-        }
-
-        // Subject Topics Creation & Management Handler
-        function handleCreateTask() {
-            const val = el.taskInput.value.trim();
-            if (!val) return;
-            
-            const selectedSubject = el.taskSubjectSelect.value || state.selectedSubject;
-            state.tasks.unshift({
-                id: Date.now().toString(),
-                title: val,
-                subject: selectedSubject,
-                completed: false
-            });
-
-            el.taskInput.value = '';
-            saveTasks();
         }
 
         function saveTasks() {
@@ -1317,23 +1467,19 @@
             const div = document.createElement('div'); div.innerText = text; return div.innerHTML;
         }
 
-        // Global Event Listeners Registration
         function setupEventListeners() {
-            // Notification permission handlers
             if (el.enableNotifHeaderBtn) el.enableNotifHeaderBtn.addEventListener('click', requestNotificationPermission);
             if (el.requestNotifModalBtn) el.requestNotifModalBtn.addEventListener('click', requestNotificationPermission);
 
-            // PIN events
             el.unlockPinBtn.addEventListener('click', verifyPin);
             el.pinInput.addEventListener('keydown', (e) => { if (e.key === 'Enter') verifyPin(); });
 
-            // Mobile Nav shortcuts
             el.mobileNavTimer.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
             el.mobileNavTasks.addEventListener('click', () => el.taskInput.focus());
             el.mobileNavZen.addEventListener('click', () => el.enterZenBtn.click());
             el.mobileNavSettings.addEventListener('click', () => el.settingsPanel.classList.remove('hidden'));
 
-            // Task creation listeners
+            // Topic creation triggers memorization modal prompt
             el.submitTaskBtn.addEventListener('click', handleCreateTask);
             el.taskInput.addEventListener('keydown', (e) => {
                 if (e.key === 'Enter') {
@@ -1342,13 +1488,25 @@
                 }
             });
 
+            // Memorization Days modal controls
+            el.cancelMemorizeModalBtn.addEventListener('click', () => {
+                state.pendingNewTopic = null;
+                el.memorizeDaysModal.classList.add('hidden');
+            });
+
+            el.saveMemorizeScheduleBtn.addEventListener('click', () => {
+                const checkboxes = document.querySelectorAll('#dayOfWeekSelector input[type="checkbox"]:checked');
+                const selectedDays = Array.from(checkboxes).map(cb => parseInt(cb.value));
+                const stopDateStr = el.memorizeStopDate.value;
+                finalizeTopicCreation(selectedDays, stopDateStr);
+            });
+
             el.taskSubjectSelect.addEventListener('change', (e) => {
                 state.selectedSubject = e.target.value;
                 renderCurriculumPills();
                 renderTasks();
             });
 
-            // Calendar Navigation Controls
             el.prevMonthBtn.addEventListener('click', () => {
                 state.currentCalendarDate.setMonth(state.currentCalendarDate.getMonth() - 1);
                 renderCalendar();
@@ -1359,7 +1517,6 @@
                 renderCalendar();
             });
 
-            // Day Modal Scheduler listeners
             el.addScheduleTopicBtn.addEventListener('click', handleAddScheduleTopic);
             el.scheduleTopicInput.addEventListener('keydown', (e) => {
                 if (e.key === 'Enter') {
@@ -1373,7 +1530,6 @@
                 if (e.target === el.dayScheduleModal) el.dayScheduleModal.classList.add('hidden');
             });
 
-            // Timer controls
             el.startPauseBtn.addEventListener('click', toggleTimer);
             el.zenStartPauseBtn.addEventListener('click', toggleTimer);
             el.resetTimerBtn.addEventListener('click', resetTimer);
@@ -1382,7 +1538,6 @@
                 btn.addEventListener('click', (e) => switchTimerMode(e.currentTarget.getAttribute('data-mode')));
             });
 
-            // Settings popup modal controls
             el.timerSettingsBtn.addEventListener('click', () => el.settingsPanel.classList.remove('hidden'));
             el.changeGoalBtn.addEventListener('click', () => el.settingsPanel.classList.remove('hidden'));
             el.closeSettingsBtn.addEventListener('click', () => el.settingsPanel.classList.add('hidden'));
@@ -1423,7 +1578,6 @@
 
             el.clearCompletedBtn.addEventListener('click', clearCompleted);
 
-            // Zen Mode controls
             el.enterZenBtn.addEventListener('click', () => {
                 el.zenOverlay.classList.remove('hidden');
                 if (document.documentElement.requestFullscreen) document.documentElement.requestFullscreen().catch(() => {});
@@ -1436,15 +1590,10 @@
 
             document.addEventListener('keydown', (e) => {
                 if (e.key === 'Escape') {
-                    if (!el.zenOverlay.classList.contains('hidden')) {
-                        el.zenOverlay.classList.add('hidden');
-                    }
-                    if (!el.settingsPanel.classList.contains('hidden')) {
-                        el.settingsPanel.classList.add('hidden');
-                    }
-                    if (!el.dayScheduleModal.classList.contains('hidden')) {
-                        el.dayScheduleModal.classList.add('hidden');
-                    }
+                    if (!el.zenOverlay.classList.contains('hidden')) el.zenOverlay.classList.add('hidden');
+                    if (!el.settingsPanel.classList.contains('hidden')) el.settingsPanel.classList.add('hidden');
+                    if (!el.dayScheduleModal.classList.contains('hidden')) el.dayScheduleModal.classList.add('hidden');
+                    if (!el.memorizeDaysModal.classList.contains('hidden')) el.memorizeDaysModal.classList.add('hidden');
                 }
             });
 

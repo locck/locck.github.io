@@ -67,6 +67,9 @@
         .touch-scroll {
             -webkit-overflow-scrolling: touch;
         }
+        .ayat-fade {
+            transition: opacity 0.5s ease-in-out;
+        }
     </style>
 </head>
 <body class="bg-zinc-950 text-zinc-100 min-h-screen flex flex-col justify-between selection:bg-indigo-500 selection:text-white pb-20 md:pb-0">
@@ -124,12 +127,16 @@
         <section class="glass rounded-3xl p-6 md:p-8 border border-zinc-800/80 relative overflow-hidden">
             <div class="absolute -right-12 -bottom-12 w-64 h-64 bg-indigo-500/10 rounded-full blur-3xl pointer-events-none"></div>
             <div class="flex flex-col md:flex-row items-center justify-between gap-6 relative z-10">
-                <div class="space-y-2 text-center md:text-left">
+                <div class="space-y-2 text-center md:text-left flex-1">
                     <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium bg-indigo-500/10 text-indigo-400 border border-indigo-500/20">
                         <i data-lucide="calendar" class="w-3.5 h-3.5"></i> Final Exam Target: Nov 27
                     </span>
                     <h2 class="text-2xl md:text-3xl font-extrabold tracking-tight">Time to Lock In & Master Lessons</h2>
-                    <p class="text-xs md:text-sm text-zinc-400 max-w-lg">Stay disciplined across all 14 subjects. Small daily efforts compound into top scores.</p>
+                    <div class="min-h-[40px] flex items-center justify-center md:justify-start">
+                        <p id="quranAyatDisplay" class="text-xs md:text-sm text-indigo-300 italic max-w-xl ayat-fade font-serif">
+                            "Verily, with hardship comes ease." (Surah Ash-Sharh 94:6)
+                        </p>
+                    </div>
                 </div>
 
                 <div class="flex items-center gap-2 text-center">
@@ -194,7 +201,6 @@
                     <span id="weeklyTotalText" class="text-xs font-bold text-indigo-400">0h Total</span>
                 </div>
                 <div id="weeklyBarChart" class="flex items-end justify-between gap-1.5 h-12 pt-2">
-                    
                 </div>
             </div>
 
@@ -228,7 +234,6 @@
                         </div>
                     </div>
 
-                    <!-- Controls Row -->
                     <div class="flex items-center justify-center gap-3 md:gap-4 mt-6 md:mt-8 w-full">
                         <button id="startPauseBtn" class="flex-1 max-w-[180px] min-h-[48px] flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-semibold text-base transition-all shadow-lg shadow-indigo-600/30 active:scale-95">
                             <i data-lucide="play" id="startPauseIcon" class="w-5 h-5 fill-current"></i>
@@ -239,38 +244,6 @@
                         </button>
                         <button id="timerSettingsBtn" title="Customize Duration" class="min-h-[48px] min-w-[48px] flex items-center justify-center p-3.5 rounded-xl bg-zinc-900 border border-zinc-800 hover:bg-zinc-800 text-zinc-400 hover:text-white transition-colors active:scale-95">
                             <i data-lucide="sliders" class="w-5 h-5"></i>
-                        </button>
-                    </div>
-
-                    <!-- Settings Panel Overlay -->
-                    <div id="settingsPanel" class="hidden absolute inset-0 bg-zinc-950/95 backdrop-blur-lg rounded-2xl p-6 z-20 flex flex-col justify-between border border-zinc-800 overflow-y-auto">
-                        <div class="flex items-center justify-between border-b border-zinc-800 pb-3">
-                            <h3 class="font-bold text-base flex items-center gap-2"><i data-lucide="settings" class="w-4 h-4 text-indigo-400"></i> Settings & Privacy</h3>
-                            <button id="closeSettingsBtn" class="text-zinc-400 hover:text-white p-1"><i data-lucide="x" class="w-5 h-5"></i></button>
-                        </div>
-
-                        <div class="space-y-4 my-auto text-left py-2">
-                            <div>
-                                <label class="text-xs font-medium text-zinc-400 block mb-1">Focus Session (minutes)</label>
-                                <input type="number" id="inputStudyMin" min="1" max="120" value="25" class="w-full bg-zinc-900 border border-zinc-800 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:border-indigo-500">
-                            </div>
-                            <div>
-                                <label class="text-xs font-medium text-zinc-400 block mb-1">Short Break (minutes)</label>
-                                <input type="number" id="inputShortMin" min="1" max="60" value="5" class="w-full bg-zinc-900 border border-zinc-800 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:border-indigo-500">
-                            </div>
-                            <div>
-                                <label class="text-xs font-medium text-zinc-400 block mb-1">Daily Study Target (hours)</label>
-                                <input type="number" id="inputDailyGoalHours" min="1" max="16" value="4" class="w-full bg-zinc-900 border border-zinc-800 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:border-indigo-500">
-                            </div>
-                            <div class="pt-2 border-t border-zinc-800/80">
-                                <label class="text-xs font-medium text-zinc-400 block mb-1">Privacy PIN Protection (Optional)</label>
-                                <input type="password" id="inputPinCode" placeholder="Leave blank to disable" maxlength="4" pattern="[0-9]*" inputmode="numeric" class="w-full bg-zinc-900 border border-zinc-800 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:border-indigo-500">
-                                <span class="text-[10px] text-zinc-500 mt-1 block">Locks your study data locally on this browser.</span>
-                            </div>
-                        </div>
-
-                        <button id="saveSettingsBtn" class="w-full py-3 rounded-xl bg-indigo-600 hover:bg-indigo-500 font-semibold text-sm text-white transition-colors active:scale-95">
-                            Save Changes
                         </button>
                     </div>
                 </div>
@@ -307,7 +280,7 @@
                     <div class="space-y-3 pb-4 border-b border-zinc-800">
                         <div class="flex items-center justify-between">
                             <h3 class="font-bold text-base flex items-center gap-2">
-                                <i data-lucide="check-square" class="w-5 h-5 text-indigo-400"></i> Lesson Tasks
+                                <i data-lucide="layers" class="w-5 h-5 text-indigo-400"></i> Subject Topics Tracker
                             </h3>
                             <span id="taskProgressPercent" class="text-xs font-bold px-2 py-0.5 rounded-full bg-indigo-500/10 text-indigo-400 border border-indigo-500/20">0% Done</span>
                         </div>
@@ -317,21 +290,24 @@
                         </div>
                     </div>
 
-                    <div class="mt-4 flex gap-2">
-                        <select id="taskSubjectSelect" class="bg-zinc-900 border border-zinc-800 rounded-xl px-2.5 py-3 text-xs text-zinc-300 focus:outline-none focus:border-indigo-500 cursor-pointer min-h-[44px]">
-                        </select>
-                        <input type="text" id="taskInput" placeholder="Add specific lesson..." class="flex-1 min-h-[44px] bg-zinc-900 border border-zinc-800 rounded-xl px-3 py-2.5 text-xs text-zinc-100 placeholder-zinc-500 focus:outline-none focus:border-indigo-500 transition-colors">
-                        <button id="submitTaskBtn" type="button" class="min-h-[44px] min-w-[44px] px-3 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-medium text-xs flex items-center justify-center transition-all active:scale-95 shadow-sm">
-                            <i data-lucide="plus" class="w-5 h-5"></i>
-                        </button>
+                    <div class="mt-4 space-y-2">
+                        <label class="text-[11px] font-semibold text-zinc-400 uppercase tracking-wider block">Add Topic for Selected Subject</label>
+                        <div class="flex gap-2">
+                            <select id="taskSubjectSelect" class="bg-zinc-900 border border-zinc-800 rounded-xl px-2.5 py-3 text-xs text-zinc-300 focus:outline-none focus:border-indigo-500 cursor-pointer min-h-[44px]">
+                            </select>
+                            <input type="text" id="taskInput" placeholder="Enter topic name..." class="flex-1 min-h-[44px] bg-zinc-900 border border-zinc-800 rounded-xl px-3 py-2.5 text-xs text-zinc-100 placeholder-zinc-500 focus:outline-none focus:border-indigo-500 transition-colors">
+                            <button id="submitTaskBtn" type="button" class="min-h-[44px] min-w-[44px] px-3 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-medium text-xs flex items-center justify-center transition-all active:scale-95 shadow-sm">
+                                <i data-lucide="plus" class="w-5 h-5"></i>
+                            </button>
+                        </div>
                     </div>
 
                     <div class="flex items-center justify-between mt-4 text-xs text-zinc-400">
-                        <span id="taskCountText">0 tasks remaining</span>
-                        <button id="clearCompletedBtn" type="button" class="hover:text-zinc-200 transition-colors py-1">Clear completed</button>
+                        <span id="taskCountText">0 topics remaining</span>
+                        <button id="clearCompletedBtn" type="button" class="hover:text-zinc-200 transition-colors py-1">Clear finished topics</button>
                     </div>
 
-                    <div id="taskList" class="mt-3 flex-1 overflow-y-auto space-y-2.5 pr-1 max-h-[300px] touch-scroll">
+                    <div id="taskList" class="mt-3 flex-1 overflow-y-auto space-y-2.5 pr-1 max-h-[280px] touch-scroll">
                     </div>
                 </div>
 
@@ -340,14 +316,50 @@
         </div>
 
     </main>
+
+    <div id="settingsPanel" class="hidden fixed inset-0 bg-zinc-950/80 backdrop-blur-md z-50 flex items-center justify-center p-4">
+        <div class="glass max-w-md w-full rounded-3xl p-6 border border-zinc-800 shadow-2xl space-y-6 relative animate-in fade-in zoom-in duration-200">
+            <div class="flex items-center justify-between border-b border-zinc-800 pb-3">
+                <h3 class="font-bold text-lg flex items-center gap-2"><i data-lucide="settings" class="w-5 h-5 text-indigo-400"></i> Settings & Preferences</h3>
+                <button id="closeSettingsBtn" class="text-zinc-400 hover:text-white p-1 rounded-lg hover:bg-zinc-800 transition-colors"><i data-lucide="x" class="w-5 h-5"></i></button>
+            </div>
+
+            <div class="space-y-4 text-left">
+                <div>
+                    <label class="text-xs font-medium text-zinc-400 block mb-1">Focus Session (minutes)</label>
+                    <input type="number" id="inputStudyMin" min="1" max="120" value="25" class="w-full bg-zinc-900 border border-zinc-800 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:border-indigo-500 text-zinc-100">
+                </div>
+                <div>
+                    <label class="text-xs font-medium text-zinc-400 block mb-1">Short Break (minutes)</label>
+                    <input type="number" id="inputShortMin" min="1" max="60" value="5" class="w-full bg-zinc-900 border border-zinc-800 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:border-indigo-500 text-zinc-100">
+                </div>
+                <div>
+                    <label class="text-xs font-medium text-zinc-400 block mb-1">Daily Study Target (hours)</label>
+                    <input type="number" id="inputDailyGoalHours" min="1" max="16" value="4" class="w-full bg-zinc-900 border border-zinc-800 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:border-indigo-500 text-zinc-100">
+                </div>
+                <div class="pt-2 border-t border-zinc-800/80">
+                    <label class="text-xs font-medium text-zinc-400 block mb-1">Privacy PIN Protection (Optional)</label>
+                    <input type="password" id="inputPinCode" placeholder="Leave blank to disable" maxlength="4" pattern="[0-9]*" inputmode="numeric" class="w-full bg-zinc-900 border border-zinc-800 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:border-indigo-500 text-zinc-100">
+                    <span class="text-[10px] text-zinc-500 mt-1 block">Locks your study data locally on this browser.</span>
+                </div>
+            </div>
+
+            <div class="flex gap-3 pt-2">
+                <button id="saveSettingsBtn" class="w-full py-3 rounded-xl bg-indigo-600 hover:bg-indigo-500 font-semibold text-sm text-white transition-all shadow-lg shadow-indigo-600/20 active:scale-95">
+                    Save Changes
+                </button>
+            </div>
+        </div>
+    </div>
+
     <div class="fixed bottom-0 left-0 right-0 bg-zinc-950/95 border-t border-zinc-800 backdrop-blur-lg z-40 md:hidden px-6 py-2 flex items-center justify-around">
         <button id="mobileNavTimer" type="button" class="flex flex-col items-center gap-1 text-indigo-400 font-medium">
             <i data-lucide="timer" class="w-5 h-5"></i>
             <span class="text-[10px]">Timer</span>
         </button>
         <button id="mobileNavTasks" type="button" class="flex flex-col items-center gap-1 text-zinc-400 hover:text-zinc-200 font-medium">
-            <i data-lucide="check-square" class="w-5 h-5"></i>
-            <span class="text-[10px]">Tasks</span>
+            <i data-lucide="layers" class="w-5 h-5"></i>
+            <span class="text-[10px]">Topics</span>
         </button>
         <button id="mobileNavZen" type="button" class="flex flex-col items-center gap-1 text-zinc-400 hover:text-zinc-200 font-medium">
             <i data-lucide="maximize-2" class="w-5 h-5"></i>
@@ -382,6 +394,32 @@
     </div>
 
     <script>
+        // Motivational Quran Ayat collection
+        const quranAyatList = [
+            `"Verily, with hardship comes ease." (Surah Ash-Sharh 94:6)`,
+            `"And that there is not for man except that [good] for which he strives." (Surah An-Najm 53:39)`,
+            `"So when you have decided, then rely upon Allah. Indeed, Allah loves those who rely [upon Him]." (Surah Ali 'Imran 3:159)`,
+            `"Allah does not burden a soul beyond that it can bear." (Surah Al-Baqarah 2:286)`,
+            `"My Lord, increase me in knowledge." (Surah Taha 20:114)`,
+            `"And seek help through patience and prayer." (Surah Al-Baqarah 2:45)`,
+            `"Unquestionably, by the remembrance of Allah hearts find rest." (Surah Ar-Ra'd 13:28)`
+        ];
+
+        let currentAyatIndex = 0;
+
+        function startQuranAyatCycle() {
+            const displayEl = document.getElementById('quranAyatDisplay');
+            if (!displayEl) return;
+            setInterval(() => {
+                displayEl.style.opacity = '0';
+                setTimeout(() => {
+                    currentAyatIndex = (currentAyatIndex + 1) % quranAyatList.length;
+                    displayEl.innerText = quranAyatList[currentAyatIndex];
+                    displayEl.style.opacity = '1';
+                }, 500);
+            }, 9000);
+        }
+
         // 14 Curriculum Subjects
         const subjectsData = [
             { id: 'nahu', name: 'Nahu', cat: 'arabic' },
@@ -454,8 +492,6 @@
             taskProgressPercent: document.getElementById('taskProgressPercent'),
             taskCountText: document.getElementById('taskCountText'),
             clearCompletedBtn: document.getElementById('clearCompletedBtn'),
-            audioVolume: document.getElementById('audioVolume'),
-            activeSoundLabel: document.getElementById('activeSoundLabel'),
             enterZenBtn: document.getElementById('enterZenBtn'),
             exitZenBtn: document.getElementById('exitZenBtn'),
             zenOverlay: document.getElementById('zenOverlay'),
@@ -511,6 +547,7 @@
             checkAndUpdateStreak();
             renderAnalytics();
             setupEventListeners();
+            startQuranAyatCycle();
         });
 
         // PIN Lock Check
@@ -555,6 +592,7 @@
                     state.selectedSubject = sub.id;
                     el.taskSubjectSelect.value = sub.id;
                     renderCurriculumPills();
+                    renderTasks();
                 };
 
                 if (sub.cat === 'arabic') el.catArabic.appendChild(pill);
@@ -677,7 +715,7 @@
             switchTimerMode(state.timer.mode === 'study' ? 'shortBreak' : 'study');
         }
 
-        // Daily Goal & Analytics Engine
+        // Daily Goal & Analytics Engine (Week Starting Sunday)
         function addCompletedFocusMinutes(mins) {
             const todayKey = getTodayKey();
             state.analytics[todayKey] = (state.analytics[todayKey] || 0) + mins;
@@ -705,19 +743,26 @@
             el.dailyGoalCircle.setAttribute('stroke-dasharray', `${pct}, 100`);
             el.dailyGoalPercent.innerText = `${pct}%`;
 
-            // Weekly Bar Chart
+            // Weekly Bar Chart starting from Sunday
             el.weeklyBarChart.innerHTML = '';
             let totalWeeklyMins = 0;
             const daysArr = [];
 
-            for (let i = 6; i >= 0; i--) {
-                const d = new Date();
-                d.setDate(d.getDate() - i);
+            const now = new Date();
+            const currentDayOfWeek = now.getDay(); // 0 is Sunday
+            const sunday = new Date(now);
+            sunday.setDate(now.getDate() - currentDayOfWeek);
+
+            const dayLabels = ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'];
+
+            for (let i = 0; i < 7; i++) {
+                const d = new Date(sunday);
+                d.setDate(sunday.getDate() + i);
                 const k = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
                 const dayMins = state.analytics[k] || 0;
                 totalWeeklyMins += dayMins;
-                const label = d.toLocaleDateString('en-US', { weekday: 'narrow' });
-                daysArr.push({ label, mins: dayMins, isToday: i === 0 });
+                const isToday = k === todayKey;
+                daysArr.push({ label: dayLabels[i], mins: dayMins, isToday });
             }
 
             const maxMins = Math.max(...daysArr.map(d => d.mins), targetMins, 60);
@@ -762,68 +807,6 @@
             el.cardStreakValue.innerText = `${state.streak.count} Days`;
         }
 
-        // Web Audio Ambient Engine
-        function initAudioContext() {
-            if (!state.audio.ctx) {
-                state.audio.ctx = new (window.AudioContext || window.webkitAudioContext)();
-                state.audio.gainNode = state.audio.ctx.createGain();
-                state.audio.gainNode.gain.setValueAtTime(state.audio.volume, state.audio.ctx.currentTime);
-                state.audio.gainNode.connect(state.audio.ctx.destination);
-            }
-            if (state.audio.ctx.state === 'suspended') {
-                state.audio.ctx.resume();
-            }
-        }
-
-        function stopAmbientAudio() {
-            state.audio.nodes.forEach(node => { try { node.stop ? node.stop() : node.disconnect(); } catch (e) {} });
-            state.audio.nodes = []; 
-            state.audio.activeType = null;
-            document.querySelectorAll('.audio-btn').forEach(b => b.classList.remove('border-indigo-500', 'bg-indigo-600/10'));
-            el.activeSoundLabel.innerText = 'Off';
-        }
-
-        function playAmbientAudio(type) {
-            initAudioContext(); 
-            stopAmbientAudio();
-            state.audio.activeType = type;
-            const ctx = state.audio.ctx; 
-            const gainNode = state.audio.gainNode;
-
-            if (type === 'binaural') {
-                const merger = ctx.createChannelMerger(2);
-                const oscL = ctx.createOscillator(); oscL.frequency.value = 200; oscL.connect(merger, 0, 0);
-                const oscR = ctx.createOscillator(); oscR.frequency.value = 210; oscR.connect(merger, 0, 1);
-                merger.connect(gainNode); oscL.start(); oscR.start();
-                state.audio.nodes.push(oscL, oscR, merger);
-                el.activeSoundLabel.innerText = 'Binaural 10Hz';
-            } else if (type === 'white' || type === 'pink' || type === 'rain') {
-                const bufferSize = 2 * ctx.sampleRate;
-                const noiseBuffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
-                const output = noiseBuffer.getChannelData(0);
-                let b0 = 0, b1 = 0, b2 = 0, b3 = 0, b4 = 0, b5 = 0, b6 = 0;
-                for (let i = 0; i < bufferSize; i++) {
-                    const white = Math.random() * 2 - 1;
-                    if (type === 'white') output[i] = white;
-                    else {
-                        b0 = 0.99886 * b0 + white * 0.0555179; b1 = 0.99332 * b1 + white * 0.0750759;
-                        b2 = 0.96900 * b2 + white * 0.1538520; b3 = 0.86650 * b3 + white * 0.3104856;
-                        b4 = 0.55000 * b4 + white * 0.5329522; b5 = -0.7616 * b5 - white * 0.0168980;
-                        output[i] = b0 + b1 + b2 + b3 + b4 + b5 + b6 + white * 0.5362; output[i] *= 0.11; b6 = white * 0.115926;
-                    }
-                }
-                const whiteNoise = ctx.createBufferSource(); whiteNoise.buffer = noiseBuffer; whiteNoise.loop = true;
-                if (type === 'rain') {
-                    const filter = ctx.createBiquadFilter(); filter.type = 'lowpass'; filter.frequency.setValueAtTime(800, ctx.currentTime);
-                    whiteNoise.connect(filter); filter.connect(gainNode); state.audio.nodes.push(filter);
-                } else whiteNoise.connect(gainNode);
-                whiteNoise.start(); state.audio.nodes.push(whiteNoise);
-                el.activeSoundLabel.innerText = type === 'pink' ? 'Pink Noise' : (type === 'white' ? 'White Noise' : 'Soft Rain');
-            }
-            const btn = document.querySelector(`.audio-btn[data-sound="${type}"]`);
-            if (btn) btn.classList.add('border-indigo-500', 'bg-indigo-600/10');
-        }
-
         function playNotificationChime() {
             try {
                 const ctx = new (window.AudioContext || window.webkitAudioContext)();
@@ -841,7 +824,7 @@
             } catch (e) {}
         }
 
-        // Task & Topic Creation Handler
+        // Subject Topics Creation & Management Handler
         function handleCreateTask() {
             const val = el.taskInput.value.trim();
             if (!val) return;
@@ -871,10 +854,13 @@
 
         function renderTasks() {
             el.taskList.innerHTML = '';
-            if (state.tasks.length === 0) {
-                el.taskList.innerHTML = `<div class="text-center py-8 text-zinc-500 text-xs">No tasks added yet. Select a subject & add lesson topics above!</div>`;
+            const filteredTasks = state.tasks.filter(t => t.subject === state.selectedSubject);
+
+            if (filteredTasks.length === 0) {
+                const subObj = subjectsData.find(s => s.id === state.selectedSubject) || { name: 'Subject' };
+                el.taskList.innerHTML = `<div class="text-center py-8 text-zinc-500 text-xs">No topics added yet for ${subObj.name}. Add one above!</div>`;
             } else {
-                state.tasks.forEach(task => {
+                filteredTasks.forEach(task => {
                     const subObj = subjectsData.find(s => s.id === task.subject) || { name: 'General' };
                     const item = document.createElement('div');
                     item.className = `flex items-center justify-between p-3 rounded-xl border transition-all ${
@@ -900,12 +886,16 @@
                 });
             }
             if (window.lucide) lucide.createIcons();
+
             const completedCount = state.tasks.filter(t => t.completed).length;
             const totalCount = state.tasks.length;
             const percentage = totalCount > 0 ? Math.round((completedCount / totalCount) * 100) : 0;
             el.taskProgressBar.style.width = `${percentage}%`;
             el.taskProgressPercent.innerText = `${percentage}% Done`;
-            el.taskCountText.innerText = `${totalCount - completedCount} task(s) remaining`;
+
+            const selectedSubjectTasks = state.tasks.filter(t => t.subject === state.selectedSubject);
+            const remainingCount = selectedSubjectTasks.filter(t => !t.completed).length;
+            el.taskCountText.innerText = `${remainingCount} topic(s) remaining for selected subject`;
 
             const activeTask = state.tasks.find(t => !t.completed);
             el.zenActiveTaskLabel.innerText = activeTask ? `Current Goal: [${activeTask.subject.toUpperCase()}] ${activeTask.title}` : 'Focus Mode Active';
@@ -939,6 +929,7 @@
             el.taskSubjectSelect.addEventListener('change', (e) => {
                 state.selectedSubject = e.target.value;
                 renderCurriculumPills();
+                renderTasks();
             });
 
             // Timer controls
@@ -950,10 +941,16 @@
                 btn.addEventListener('click', (e) => switchTimerMode(e.currentTarget.getAttribute('data-mode')));
             });
 
-            // Settings modal controls
+            // Settings popup modal controls
             el.timerSettingsBtn.addEventListener('click', () => el.settingsPanel.classList.remove('hidden'));
             el.changeGoalBtn.addEventListener('click', () => el.settingsPanel.classList.remove('hidden'));
             el.closeSettingsBtn.addEventListener('click', () => el.settingsPanel.classList.add('hidden'));
+
+            el.settingsPanel.addEventListener('click', (e) => {
+                if (e.target === el.settingsPanel) {
+                    el.settingsPanel.classList.add('hidden');
+                }
+            });
 
             el.saveSettingsBtn.addEventListener('click', () => {
                 const sMin = parseInt(el.inputStudyMin.value) || 25;
@@ -977,22 +974,6 @@
 
             el.clearCompletedBtn.addEventListener('click', clearCompleted);
 
-            // Audio listeners
-            document.querySelectorAll('.audio-btn').forEach(btn => {
-                btn.addEventListener('click', (e) => {
-                    const sound = e.currentTarget.getAttribute('data-sound');
-                    if (state.audio.activeType === sound) stopAmbientAudio();
-                    else playAmbientAudio(sound);
-                });
-            });
-
-            el.audioVolume.addEventListener('input', (e) => {
-                state.audio.volume = parseFloat(e.target.value);
-                if (state.audio.gainNode && state.audio.ctx) {
-                    state.audio.gainNode.gain.setValueAtTime(state.audio.volume, state.audio.ctx.currentTime);
-                }
-            });
-
             // Zen Mode controls
             el.enterZenBtn.addEventListener('click', () => {
                 el.zenOverlay.classList.remove('hidden');
@@ -1005,8 +986,13 @@
             });
 
             document.addEventListener('keydown', (e) => {
-                if (e.key === 'Escape' && !el.zenOverlay.classList.contains('hidden')) {
-                    el.zenOverlay.classList.add('hidden');
+                if (e.key === 'Escape') {
+                    if (!el.zenOverlay.classList.contains('hidden')) {
+                        el.zenOverlay.classList.add('hidden');
+                    }
+                    if (!el.settingsPanel.classList.contains('hidden')) {
+                        el.settingsPanel.classList.add('hidden');
+                    }
                 }
             });
 
